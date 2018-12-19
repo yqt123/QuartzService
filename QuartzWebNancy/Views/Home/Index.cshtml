@@ -1,0 +1,49 @@
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <h1>欢迎来到Asp.net Nancy 框架的世界...</h1>
+        <br />
+        页面参数： 
+        <br />
+        <strong>
+            单一数值绑定：
+        </strong>
+        @Model.HelloWorld
+        <br />
+        <br />
+        <strong>
+            集合数值循环绑定：
+        </strong>
+        @if (Model.List1 != null && Model.List1.Count > 0)
+        {
+            <ul>
+                @foreach (var m in Model.List1)
+                {
+                    <li>@m</li>
+                }
+            </ul>
+        }
+        <br />
+        <br />
+        <strong>
+            集合数值循环绑定：
+        </strong>
+        @if (Model.List2 != null && Model.List2.Count > 0)
+        {
+            <ul>
+                @foreach (var m in Model.List2)
+                {
+                    <li>@m.ID  @m.Name</li>
+                }
+            </ul>
+        }
+    </div>
+</body>
+</html>

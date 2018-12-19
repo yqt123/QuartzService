@@ -1,0 +1,147 @@
+﻿
+正在运行事务处理安装。
+
+正在开始安装的“安装”阶段。
+查看日志文件的内容以获得 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.exe 程序集的进度。
+该文件位于 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.InstallLog。
+
+在“安装”阶段发生异常。
+System.InvalidOperationException: 无法创建 QuartzService.ProjectInstaller 安装程序类型的实例。
+引发了内部异常 System.Reflection.TargetInvocationException，错误消息如下: 调用的目标发生了异常。。
+引发了内部异常 System.ArgumentException，错误消息如下: 服务名  包含无效字符、为空或者过长(最大长度 = 80)。。
+
+正在开始安装的“回退”阶段。
+查看日志文件的内容以获得 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.exe 程序集的进度。
+该文件位于 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.InstallLog。
+在 System.Configuration.Install.AssemblyInstaller 安装程序的“回退”阶段发生异常。
+System.InvalidOperationException: 无法创建 QuartzService.ProjectInstaller 安装程序类型的实例。
+引发了内部异常 System.Reflection.TargetInvocationException，错误消息如下: 调用的目标发生了异常。。
+引发了内部异常 System.ArgumentException，错误消息如下: 服务名  包含无效字符、为空或者过长(最大长度 = 80)。。
+在安装的“回退”阶段发生异常。将忽略该异常并继续回退。但是，在完成回退后计算机可能无法完全还原到它的初始状态。
+
+“回退”阶段已成功完成。
+
+已完成事务处理安装。
+
+正在运行事务处理安装。
+
+正在开始安装的“安装”阶段。
+查看日志文件的内容以获得 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.exe 程序集的进度。
+该文件位于 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.InstallLog。
+
+在“安装”阶段发生异常。
+System.InvalidOperationException: 无法创建 QuartzService.ProjectInstaller 安装程序类型的实例。
+引发了内部异常 System.Reflection.TargetInvocationException，错误消息如下: 调用的目标发生了异常。。
+引发了内部异常 System.ArgumentException，错误消息如下: 服务名  包含无效字符、为空或者过长(最大长度 = 80)。。
+
+正在开始安装的“回退”阶段。
+查看日志文件的内容以获得 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.exe 程序集的进度。
+该文件位于 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.InstallLog。
+在 System.Configuration.Install.AssemblyInstaller 安装程序的“回退”阶段发生异常。
+System.InvalidOperationException: 无法创建 QuartzService.ProjectInstaller 安装程序类型的实例。
+引发了内部异常 System.Reflection.TargetInvocationException，错误消息如下: 调用的目标发生了异常。。
+引发了内部异常 System.ArgumentException，错误消息如下: 服务名  包含无效字符、为空或者过长(最大长度 = 80)。。
+在安装的“回退”阶段发生异常。将忽略该异常并继续回退。但是，在完成回退后计算机可能无法完全还原到它的初始状态。
+
+“回退”阶段已成功完成。
+
+已完成事务处理安装。
+
+正在运行事务处理安装。
+
+正在开始安装的“安装”阶段。
+查看日志文件的内容以获得 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.exe 程序集的进度。
+该文件位于 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.InstallLog。
+
+在“安装”阶段发生异常。
+System.ArgumentOutOfRangeException: 索引和长度必须引用该字符串内的位置。
+参数名: length
+
+正在开始安装的“回退”阶段。
+查看日志文件的内容以获得 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.exe 程序集的进度。
+该文件位于 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.InstallLog。
+
+“回退”阶段已成功完成。
+
+已完成事务处理安装。
+
+正在运行事务处理安装。
+
+正在开始安装的“安装”阶段。
+查看日志文件的内容以获得 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.exe 程序集的进度。
+该文件位于 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.InstallLog。
+
+“安装”阶段已成功完成，正在开始“提交”阶段。
+查看日志文件的内容以获得 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.exe 程序集的进度。
+该文件位于 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.InstallLog。
+
+“提交”阶段已成功完成。
+
+已完成事务处理安装。
+
+
+正在开始卸载。
+查看日志文件的内容以获得 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.exe 程序集的进度。
+该文件位于 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.InstallLog。
+
+正在运行事务处理安装。
+
+正在开始安装的“安装”阶段。
+查看日志文件的内容以获得 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.exe 程序集的进度。
+该文件位于 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.InstallLog。
+
+在“安装”阶段发生异常。
+System.InvalidOperationException: 无法创建 QuartzService.ProjectInstaller 安装程序类型的实例。
+引发了内部异常 System.Reflection.TargetInvocationException，错误消息如下: 调用的目标发生了异常。。
+引发了内部异常 System.ArgumentException，错误消息如下: 服务名  包含无效字符、为空或者过长(最大长度 = 80)。。
+
+正在开始安装的“回退”阶段。
+查看日志文件的内容以获得 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.exe 程序集的进度。
+该文件位于 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.InstallLog。
+在 System.Configuration.Install.AssemblyInstaller 安装程序的“回退”阶段发生异常。
+System.InvalidOperationException: 无法创建 QuartzService.ProjectInstaller 安装程序类型的实例。
+引发了内部异常 System.Reflection.TargetInvocationException，错误消息如下: 调用的目标发生了异常。。
+引发了内部异常 System.ArgumentException，错误消息如下: 服务名  包含无效字符、为空或者过长(最大长度 = 80)。。
+在安装的“回退”阶段发生异常。将忽略该异常并继续回退。但是，在完成回退后计算机可能无法完全还原到它的初始状态。
+
+“回退”阶段已成功完成。
+
+已完成事务处理安装。
+
+正在运行事务处理安装。
+
+正在开始安装的“安装”阶段。
+查看日志文件的内容以获得 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.exe 程序集的进度。
+该文件位于 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.InstallLog。
+
+在“安装”阶段发生异常。
+System.InvalidOperationException: 无法创建 QuartzService.ProjectInstaller 安装程序类型的实例。
+引发了内部异常 System.Reflection.TargetInvocationException，错误消息如下: 调用的目标发生了异常。。
+引发了内部异常 System.ArgumentException，错误消息如下: 服务名  包含无效字符、为空或者过长(最大长度 = 80)。。
+
+正在开始安装的“回退”阶段。
+查看日志文件的内容以获得 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.exe 程序集的进度。
+该文件位于 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.InstallLog。
+在 System.Configuration.Install.AssemblyInstaller 安装程序的“回退”阶段发生异常。
+System.InvalidOperationException: 无法创建 QuartzService.ProjectInstaller 安装程序类型的实例。
+引发了内部异常 System.Reflection.TargetInvocationException，错误消息如下: 调用的目标发生了异常。。
+引发了内部异常 System.ArgumentException，错误消息如下: 服务名  包含无效字符、为空或者过长(最大长度 = 80)。。
+在安装的“回退”阶段发生异常。将忽略该异常并继续回退。但是，在完成回退后计算机可能无法完全还原到它的初始状态。
+
+“回退”阶段已成功完成。
+
+已完成事务处理安装。
+
+正在运行事务处理安装。
+
+正在开始安装的“安装”阶段。
+查看日志文件的内容以获得 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.exe 程序集的进度。
+该文件位于 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.InstallLog。
+
+“安装”阶段已成功完成，正在开始“提交”阶段。
+查看日志文件的内容以获得 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.exe 程序集的进度。
+该文件位于 E:\GithubTestProject\QuartzService\QuartzService\bin\Debug\QuartzService.InstallLog。
+
+“提交”阶段已成功完成。
+
+已完成事务处理安装。
