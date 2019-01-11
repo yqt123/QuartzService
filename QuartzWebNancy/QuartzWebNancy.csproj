@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="Model\TestClass.cs" />
     <Compile Include="Modules\BaseModule.cs" />
+    <Compile Include="Modules\QuartzModule.cs" />
     <Compile Include="Modules\HomeModule.cs" />
     <Compile Include="Modules\TestModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

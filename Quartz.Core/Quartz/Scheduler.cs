@@ -11,15 +11,15 @@ namespace Quartz.Core.Quartz
     {
         private static readonly object lockObj = new object(); //锁对象
         private static Scheduler _Scheduler = null;     //单例实现
-        private IScheduler _QtzScheduler = null;        //调度器
-        public IQuartzSchedule _iSchedule = IOC.ObjectContainer.Current.Resolve<IQuartzSchedule>();
+        public IScheduler _QtzScheduler = null;        //调度器
+        private IQuartzSchedule _iSchedule = IOC.ObjectContainer.Current.Resolve<IQuartzSchedule>();
 
         private Scheduler()
         {
             //初始化 Quartz 的作业调度器
             var properties = new NameValueCollection();
             var schedulerFactory = new StdSchedulerFactory(properties);
-            this._QtzScheduler = schedulerFactory.GetScheduler().GetAwaiter().GetResult();            
+            this._QtzScheduler = schedulerFactory.GetScheduler().GetAwaiter().GetResult();
             this.ScheduleJob();
         }
 
@@ -92,10 +92,7 @@ namespace Quartz.Core.Quartz
         //使用采集计划来创建作业
         private void ScheduleJobByPlan(IScheduler sched, ScheduleJob_Details JobDetail)
         {
-            if (JobDetail.is_durable)
-            {
-                JobHelper.ScheduleJobByPlan(_QtzScheduler, JobDetail);
-            }
+            JobHelper.ScheduleJobByPlan(_QtzScheduler, JobDetail);
         }
 
         //单例创建调度器

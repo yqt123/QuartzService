@@ -13,7 +13,7 @@ namespace Quartz.Core.Owin
         {
             app.UseWelcomePage("/");
             app.UseErrorPage();
-            app.UseCrystalQuartz(() => Quartz.Scheduler.Create()._iSchedule);
+            app.UseCrystalQuartz(() => Quartz.Scheduler.Create()._QtzScheduler);
             app.UseNancy();
             //app.Run(context =>
             //{

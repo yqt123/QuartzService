@@ -21,8 +21,8 @@ namespace ConsoleTest
 
             //Console.ReadLine();
 
-            //var pcScheduler = Scheduler.Create();
-            //pcScheduler.Start();
+            var pcScheduler = Scheduler.Create();
+            pcScheduler.Start();
 
 
             OwinHelper owinHelper = OwinHelper.Create("8099");

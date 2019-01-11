@@ -15,12 +15,9 @@ namespace QuartzWebNancy.Modules
         public HomeModule()
         {
             //主页
-            Get["/nancy"] = r =>
-            {
-                return Response.AsRedirect("/nancy/Home");
+            Get["/nancy/Home"] = parameters => {
+                return Response.AsRedirect("/nancy/Home/index");
             };
-            //主页
-            Get["/nancy/Home"] = parameters => ReturnHomeAction();
 
             //首页
             Get["/nancy/Home/index"] = parameters => ReturnHomeAction();
