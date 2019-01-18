@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\TestClass.cs" />
+    <Compile Include="Modules\ApiModule.cs" />
     <Compile Include="Modules\BaseModule.cs" />
     <Compile Include="Modules\QuartzModule.cs" />
     <Compile Include="Modules\HomeModule.cs" />
