@@ -1,22 +1,27 @@
 ﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
 <!DOCTYPE html>
-<html>
+<html ng-app="voteApp">
 <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title>@ViewBag.Title</title>
-    <link rel="shortcut icon" type="image/x-icon" href="~/Content/Image/favicon.ico">
-    <link href="~/Content/Css/style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="~/Content/QuartzManage/static/css/pure-0.6.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/QuartzManage/static/css/app.css" />
+
+    <script src="~/Content/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="https://cdn.staticfile.org/angular.js/1.7.0/angular.min.js"></script>
+    <script src="https://cdn.bootcss.com/angular.js/1.7.0/angular-route.min.js"></script>
+    <script type="text/javascript" src="~/Content/QuartzManage/app/app.js"></script>
+    <script type="text/javascript" src="~/Content/QuartzManage/app/service/voteServices.js"></script>
+    <script type="text/javascript" src="~/Content/QuartzManage/app/filter/voteFilters.js"></script>
+    <script type="text/javascript" src="~/Content/QuartzManage/app/directive/voteDirectives.js"></script>
+    <script type="text/javascript" src="~/Content/QuartzManage/app/controller/voteControllers.js"></script>
+
     @RenderSection("style", required: false)
 </head>
 <body>
     @RenderBody()
 
-    <script src="~/Content/Scripts/jquery-1.10.2.min.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

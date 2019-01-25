@@ -1,0 +1,61 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+@{
+    Layout = null;
+}
+<form class="pure-form pure-form-stacked">
+    <div class="pure-g">
+        <div class="pure-u-1-2">
+            <label>Search: </label>
+            <input type="text" class="pure-u-1-1" ng-model="queryVal" />
+        </div>
+        <div class="pure-u-1-2">
+            <label>Order by: </label>
+            <select class="pure-u-1-1" ng-model="orderProp">
+                <option value="-id">编号</option>
+                <option value="sched_name">计划名称</option>
+            </select>
+        </div>
+    </div>
+</form>
+<div class="pure-g" style="margin-top:-25px;">
+    <div class="pure-u-1-1">
+        <p>
+            <a href="#!/add" class="pure-button pure-button-primary">new job</a>
+        </p>
+        <table class="pure-table pure-table-horizontal">
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>计划名称</th>
+                    <th>作业名称</th>
+                    <th>作业组</th>
+                    <th>外部程序集</th>
+                    <th>调用类</th>
+                    <th>是否可用</th>
+                    <th>描述</th>
+                    <th>开始时间</th>
+                    <th>结束时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in scheduleDetails | filter:queryVal | orderBy:orderProp">
+                    <td><a href="#!/view/{{item.id}}">{{item.id}}</a></td>
+                    <td>{{item.sched_name}}</td>
+                    <td>{{item.job_name}}</td>
+                    <td>{{item.job_group}}</td>
+                    <td>{{item.outAssembly}}</td>
+                    <td>{{item.job_class_name}}</td>
+                    <td>{{item.is_durable | boolFilter}}</td>
+                    <td>{{item.description}}</td>
+                    <td>{{item.startTime}}</td>
+                    <td>{{item.endTime}}</td>
+                    <td>
+                        <a href="#!/edit/{{item.id}}">编辑</a>
+                        <a href="#" ng-click="removePlayer($event, item.id)">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

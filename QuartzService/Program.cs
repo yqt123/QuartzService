@@ -38,7 +38,6 @@ namespace QuartzService
             var pcScheduler = Scheduler.Create();
             pcScheduler.Start();
 
-
             OwinHelper owinHelper = OwinHelper.Create("8099");
             owinHelper.Start();
             Console.ReadLine();

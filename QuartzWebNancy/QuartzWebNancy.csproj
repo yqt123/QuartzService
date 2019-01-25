@@ -52,6 +52,9 @@
     <Reference Include="Nancy.ViewEngines.Razor, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nancy.Viewengines.Razor.1.4.3\lib\net40\Nancy.ViewEngines.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
@@ -65,13 +68,34 @@
   <ItemGroup>
     <Content Include="Content\Css\Style.css" />
     <Content Include="Content\Image\favicon.ico" />
+    <Content Include="Content\QuartzManage\app\app.js" />
+    <Content Include="Content\QuartzManage\app\controller\voteControllers.js" />
+    <Content Include="Content\QuartzManage\app\directive\voteDirectives.js" />
+    <Content Include="Content\QuartzManage\app\filter\voteFilters.js" />
+    <Content Include="Content\QuartzManage\app\service\voteServices.js" />
+    <Content Include="Content\QuartzManage\static\css\app.css" />
+    <Content Include="Content\QuartzManage\static\css\pure-0.6.min.css" />
+    <Content Include="Content\QuartzManage\static\js\angular-1.5.8.js" />
+    <Content Include="Content\QuartzManage\static\js\angular-1.5.8.min.js" />
+    <Content Include="Content\QuartzManage\static\js\angular-route.js" />
+    <Content Include="Content\QuartzManage\static\js\angular-route.min.js" />
+    <Content Include="Content\QuartzManage\tmpl\player\add.html" />
+    <Content Include="Content\QuartzManage\tmpl\player\edit.html" />
+    <Content Include="Content\QuartzManage\tmpl\player\list.html" />
+    <Content Include="Content\QuartzManage\tmpl\player\view.html" />
     <Content Include="Content\Scripts\jquery-1.10.2.min.js" />
+    <None Include="Views\QuartzManage\add.cshtml" />
+    <None Include="Views\QuartzManage\edit.cshtml" />
+    <None Include="Views\QuartzManage\list.cshtml" />
+    <None Include="Views\QuartzManage\view.cshtml" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\TestClass.cs" />
     <Compile Include="Modules\ApiModule.cs" />
     <Compile Include="Modules\BaseModule.cs" />
+    <Compile Include="Modules\Bootstrapper.cs" />
+    <Compile Include="Modules\QuartzManageModule.cs" />
     <Compile Include="Modules\QuartzModule.cs" />
     <Compile Include="Modules\HomeModule.cs" />
     <Compile Include="Modules\TestModule.cs" />
@@ -84,13 +108,33 @@
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Test\LayoutTest.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Content\QuartzManage\data\players.json" />
     <None Include="packages.config" />
+    <Content Include="Views\QuartzManage\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout1.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IService\IService.csproj">
+      <Project>{0feb2acc-b1eb-49ad-8266-1c3a356ee842}</Project>
+      <Name>IService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{537bb201-bc01-4570-94d7-27e5c5cca3ed}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quartz.Core\Quartz.Core.csproj">
+      <Project>{a902989f-236b-4dba-8bd4-66a4294f6fbd}</Project>
+      <Name>Quartz.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\QuartzManage\static\img\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
