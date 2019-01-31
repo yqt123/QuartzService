@@ -83,9 +83,9 @@ function playerEditCtrl($scope, $http, $routeParams, $location) {
 
 //View Controller
 function playerViewCtrl($scope, $http, $routeParams) {
+
     $http.get("/quartzmanage/scheduleDetail/" + $routeParams.id).then(function (res) {
-        var i = parseInt($routeParams.id) - 1;
-        $scope.item = res.data[i];
+        $scope.detail = res.data;
     });
 
     //获取头像图片名称

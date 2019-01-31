@@ -111,7 +111,7 @@
     <Content Include="Content\QuartzManage\data\players.json" />
     <None Include="packages.config" />
     <Content Include="Views\QuartzManage\Index.cshtml" />
-    <Content Include="Views\Shared\_Layout1.cshtml" />
+    <Content Include="Views\Shared\_LayoutEmpty.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
