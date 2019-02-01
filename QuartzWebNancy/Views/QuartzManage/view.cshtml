@@ -2,63 +2,74 @@
 @{
     Layout = "/Shared/_LayoutEmpty.cshtml";
 }
+<style>
+    .pure-u-3-5[type=text] {
+        max-width: 300px;
+    }
+
+    label.pure-u-1-5 {
+        padding-top: 0.5em;
+    }
+
+    form {
+        padding: 10px;
+    }
+</style>
 <form class="pure-form pure-form-aligned">
 
-    <div class="pure-g">        
-        <div class="pure-u-1-5"><label>编号: </label></div>
-        <div class="pure-u-3-5"><input type="text" value="{{detail.id}}" /></div>
+    <div class="pure-g pure-control-group">
+        <label class="pure-u-1-5">编号: </label>
+        <input class="pure-u-3-5" type="text" value="{{detail.id}}" disabled />
     </div>
 
     <div class="pure-g pure-control-group">
         <label class="pure-u-1-5">计划名称: </label>
-        <input class="pure-u-3-5" type="text" value="{{detail.sched_name}}" />
+        <input class="pure-u-3-5" type="text" value="{{detail.sched_name}}" disabled />
     </div>
 
     <div class="pure-g pure-control-group">
         <label class="pure-u-1-5">作业名称: </label>
-        <input class="pure-u-3-5" type="text" value="{{detail.job_name}}" />
+        <input class="pure-u-3-5" type="text" value="{{detail.job_name}}" disabled />
     </div>
 
     <div class="pure-g pure-control-group">
         <label class="pure-u-1-5">作业组: </label>
-        <input class="pure-u-3-5" type="text" value="{{detail.job_group}}" />
+        <input class="pure-u-3-5" type="text" value="{{detail.job_group}}" disabled />
     </div>
 
     <div class="pure-g pure-control-group">
         <label class="pure-u-1-5">外部程序集: </label>
-        <input class="pure-u-3-5" type="text" value="{{detail.outAssembly}}" />
+        <input class="pure-u-3-5" type="text" value="{{detail.outAssembly}}" disabled />
     </div>
 
     <div class="pure-g pure-control-group">
         <label class="pure-u-1-5">调用类: </label>
-        <input class="pure-u-3-5" type="text" value="{{detail.job_class_name}}" />
+        <input class="pure-u-3-5" type="text" value="{{detail.job_class_name}}" disabled />
     </div>
 
     <div class="pure-g pure-control-group">
         <label class="pure-u-1-5">是否可用: </label>
-        <input class="pure-u-3-5" type="text" value="{{detail.is_durable | boolFilter}}" />
+        <input class="pure-u-3-5" type="text" value="{{detail.is_durable | boolFilter}}" disabled />
     </div>
 
     <div class="pure-g pure-control-group">
         <label class="pure-u-1-5">描述: </label>
-        <input class="pure-u-3-5" type="text" value="{{detail.description}}" />
+        <input class="pure-u-3-5" type="text" value="{{detail.description}}" disabled />
     </div>
 
     <div class="pure-g pure-control-group">
         <label class="pure-u-1-5">开始时间: </label>
-        <input class="pure-u-3-5" type="text" value="{{detail.startTime}}" />
+        <input class="pure-u-3-5" type="text" value="{{detail.startTime}}" disabled />
     </div>
 
     <div class="pure-g pure-control-group">
         <label class="pure-u-1-5">结束时间: </label>
-        <input class="pure-u-3-5" type="text" value="{{detail.endTime}}" />
+        <input class="pure-u-3-5" type="text" value="{{detail.endTime}}" disabled />
     </div>
 
     <div class="pure-control-group">
-        <button class="pure-button pure-button-primary"
-                ng-disabled="isVoted" ng-click="vote()">
-            {{voteBtnText}}
-        </button>
-        <button href="#!/list" class="pure-button">返回</button>
+        <a href="#!/list" class="pure-button">返回</a>
     </div>
 </form>
+
+
