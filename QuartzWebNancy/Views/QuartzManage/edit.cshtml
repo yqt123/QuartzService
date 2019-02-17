@@ -1,51 +1,74 @@
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
 @{
-    Layout = null;
+    Layout = "/Shared/_LayoutEmpty.cshtml";
 }
 <form name="playerForm" class="pure-form pure-form-aligned" novalidate autocomplete="off">
     <fieldset>
-        <legend>编辑球员信息 - #{{player.id}}</legend>
+        <legend>编辑作业信息 - 编号 {{scheduler.id}}</legend>
 
-        <input type="hidden" name="id" ng-model="player.id" required />
+        <input type="hidden" name="id" ng-model="scheduler.id" required />
 
         <div class="pure-control-group">
-            <label>姓名</label>
-            <input type="text" name="name" ng-model="player.name" required />
-            <span class="val-error" ng-show="playerForm.name.$touched && playerForm.name.$invalid">
-                必须填写球员姓名
+            <label>计划名称</label>
+            <input type="text" name="sched_name" ng-model="scheduler.sched_name" required />
+            <span class="val-error" ng-show="playerForm.sched_name.$touched && playerForm.sched_name.$invalid">
+                <span ng-show="playerForm.sched_name.$error.required">必须填写计划名称</span>
             </span>
         </div>
 
         <div class="pure-control-group">
-            <label>号码</label>
-            <input type="text" name="num" ng-model="player.num" required val-player-num />
-            <span class="val-error" ng-show="playerForm.num.$touched && playerForm.num.$invalid">
-                <span ng-show="playerForm.num.$error.required">必须填写球员号码</span>
-                <span ng-show="playerForm.num.$error.playerNum">球员号码必须是0~99之间的整数</span>
+            <label>作业名称</label>
+            <input type="text" name="job_name" ng-model="scheduler.job_name" required />
+            <span class="val-error" ng-show="playerForm.job_name.$touched && playerForm.job_name.$invalid">
+                <span ng-show="playerForm.job_name.$error.required">必须填写作业名称</span>
+            </span>
+            <span class="val-error" ng-show="isExisted">
+                作业名称已存在
             </span>
         </div>
 
         <div class="pure-control-group">
-            <label>位置</label>
-            <select name="position" ng-model="player.position" required>
-                <option ng-repeat="pos in positions" value="{{pos.val}}">{{pos.txt}}</option>
-            </select>
-            <span class="val-error" ng-show="playerForm.position.$touched && playerForm.position.$invalid">
-                请选择球员位置
+            <label>作业组</label>
+            <input type="text" name="job_group" ng-model="scheduler.job_group" required />
+            <span class="val-error" ng-show="playerForm.job_group.$touched && playerForm.job_group.$invalid">
+                <span ng-show="playerForm.job_group.$error.required">必须填写作业组</span>
             </span>
         </div>
 
         <div class="pure-control-group">
-            <label>球队</label>
-            <select name="team" ng-model="player.team" ng-options="team for team in teams" required></select>
-            <span class="val-error" ng-show="playerForm.team.$touched && playerForm.team.$invalid">
-                请选择球员所在球队
+            <label>外部程序集</label>
+            <input type="text" name="outAssembly" ng-model="scheduler.outAssembly" />
+        </div>
+
+        <div class="pure-control-group">
+            <label>调用类</label>
+            <input type="text" name="job_class_name" ng-model="scheduler.job_class_name" required />
+            <span class="val-error" ng-show="playerForm.job_class_name.$touched && playerForm.job_class_name.$invalid">
+                <span ng-show="playerForm.job_class_name.$error.required">必须填写调用类</span>
             </span>
         </div>
 
         <div class="pure-control-group">
-            <label>头像</label>
-            <input type="file" name="thumb" ng-model="player.thumb" />
+            <label>是否可用</label>
+            <input type="checkbox" name="is_durable" ng-model="scheduler.is_durable" />
+        </div>
+
+        <div class="pure-control-group">
+            <label>描述</label>
+            <input type="text" name="description" ng-model="scheduler.description" required />
+            <span class="val-error" ng-show="playerForm.description.$touched && playerForm.description.$invalid">
+                <span ng-show="playerForm.description.$error.required">必须填写描述</span>
+            </span>
+        </div>
+
+        <div class="pure-control-group">
+            <label>开始时间</label>
+            <input type="text" name="startTime" ng-model="scheduler.startTime" />
+        </div>
+
+        <div class="pure-control-group">
+            <label>结束时间</label>
+            <input type="text" name="endTime" ng-model="scheduler.endTime" />
         </div>
 
         <div class="pure-controls">

@@ -83,9 +83,14 @@
     <Content Include="Content\QuartzManage\tmpl\player\edit.html" />
     <Content Include="Content\QuartzManage\tmpl\player\list.html" />
     <Content Include="Content\QuartzManage\tmpl\player\view.html" />
+    <Content Include="Content\Scripts\angular-animate-1.7.0.min.js" />
+    <Content Include="Content\Scripts\angular-route-1.7.0.min.js" />
     <Content Include="Content\Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Content\Scripts\angular-1.7.0.min.js" />
     <None Include="Views\QuartzManage\add.cshtml" />
     <None Include="Views\QuartzManage\edit.cshtml" />
+    <Content Include="Views\QuartzManage\TriggerList.cshtml" />
+    <Content Include="Views\QuartzManage\welcome.cshtml" />
     <None Include="Views\QuartzManage\list.cshtml" />
     <None Include="Views\QuartzManage\view.cshtml" />
     <Content Include="Web.config" />

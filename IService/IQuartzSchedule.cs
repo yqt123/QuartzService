@@ -10,19 +10,19 @@ namespace IService
 
         IEnumerable<ScheduleJob_Details_Triggers> ListScheduleDetailsTriggers(string schedName, string jobName);
 
-        ScheduleJob_Details GetScheduleDetails(int id);
+        ScheduleJob_Details GetScheduleDetail(int id);
 
-        bool DeleteScheduleDetails(int id);
+        bool DeleteScheduleDetail(int id);
 
-        bool SaveScheduleDetails(ScheduleJob_Details data);
+        bool SaveScheduleDetail(ScheduleJob_Details data);
 
-        bool EditScheduleDetails(ScheduleJob_Details data);
+        bool EditScheduleDetail(ScheduleJob_Details data);
 
-        bool DeleteScheduleDetailsTriggers(int id);
+        bool DeleteScheduleDetailsTrigger(int id);
 
-        bool SaveScheduleDetailsTriggers(ScheduleJob_Details_Triggers data);
+        bool SaveScheduleDetailsTrigger(ScheduleJob_Details_Triggers data);
 
-        bool EditScheduleDetailsTriggers(ScheduleJob_Details_Triggers data);
+        bool EditScheduleDetailsTrigger(ScheduleJob_Details_Triggers data);
 
         bool SaveScheduleLog(ScheduleJob_Log data);
 

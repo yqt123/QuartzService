@@ -1,13 +1,14 @@
 //自定义Service
-angular.module("voteApp").service("voteSer", ["$q", "$http", function($q, $http) {
-	this.getPlayerNames = function() {
-        return $http.get("quartzmanage/data/players.json").then(function(resp) {
+angular.module("voteApp").service("voteSer", ["$q", "$http", function ($q, $http) {
+
+    this.getSchedulerNames = function() {
+        return $http.get("/quartzmanage/scheduleDetails").then(function(resp) {
 			if(typeof resp.data === "object") {
-				var playerNames = [];
+                var schedulerNames = [];
 				angular.forEach(resp.data, function(v, k) {
-					playerNames.push(v.name.toLowerCase());
+                    schedulerNames.push(v.job_name.toLowerCase());
 				});
-				return playerNames;
+                return schedulerNames;
 			}else {
 				//无效数据
 				return $q.reject(resp.data);

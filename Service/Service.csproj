@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseService.cs" />
+    <Compile Include="Job\TestJob2.cs" />
     <Compile Include="Job\TestJob.cs" />
     <Compile Include="QuartzSchedule.cs" />
     <Compile Include="SqlConnectionHelper.cs" />

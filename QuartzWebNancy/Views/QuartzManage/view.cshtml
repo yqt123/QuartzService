@@ -2,74 +2,58 @@
 @{
     Layout = "/Shared/_LayoutEmpty.cshtml";
 }
-<style>
-    .pure-u-3-5[type=text] {
-        max-width: 300px;
-    }
+<form name="playerForm" class="pure-form pure-form-aligned" novalidate autocomplete="off">
+    <fieldset>
+        <legend>作业信息</legend>
 
-    label.pure-u-1-5 {
-        padding-top: 0.5em;
-    }
+        <div class="pure-control-group">
+            <label>计划名称</label>
+            <input type="text" name="sched_name" ng-model="detail.id" />
+        </div>
 
-    form {
-        padding: 10px;
-    }
-</style>
-<form class="pure-form pure-form-aligned">
+        <div class="pure-control-group">
+            <label>作业名称</label>
+            <input type="text" name="job_name" ng-model="detail.job_name" />
+        </div>
 
-    <div class="pure-g pure-control-group">
-        <label class="pure-u-1-5">编号: </label>
-        <input class="pure-u-3-5" type="text" value="{{detail.id}}" disabled />
-    </div>
+        <div class="pure-control-group">
+            <label>作业组</label>
+            <input type="text" name="job_group" ng-model="detail.job_group" />
+        </div>
 
-    <div class="pure-g pure-control-group">
-        <label class="pure-u-1-5">计划名称: </label>
-        <input class="pure-u-3-5" type="text" value="{{detail.sched_name}}" disabled />
-    </div>
+        <div class="pure-control-group">
+            <label>外部程序集</label>
+            <input type="text" name="outAssembly" ng-model="detail.outAssembly" />
+        </div>
 
-    <div class="pure-g pure-control-group">
-        <label class="pure-u-1-5">作业名称: </label>
-        <input class="pure-u-3-5" type="text" value="{{detail.job_name}}" disabled />
-    </div>
+        <div class="pure-control-group">
+            <label>调用类</label>
+            <input type="text" name="job_class_name" ng-model="detail.job_class_name" />
+        </div>
 
-    <div class="pure-g pure-control-group">
-        <label class="pure-u-1-5">作业组: </label>
-        <input class="pure-u-3-5" type="text" value="{{detail.job_group}}" disabled />
-    </div>
+        <div class="pure-control-group">
+            <label>是否可用</label>
+            <input type="checkbox" name="is_durable" ng-model="detail.is_durable" />
+        </div>
 
-    <div class="pure-g pure-control-group">
-        <label class="pure-u-1-5">外部程序集: </label>
-        <input class="pure-u-3-5" type="text" value="{{detail.outAssembly}}" disabled />
-    </div>
+        <div class="pure-control-group">
+            <label>描述</label>
+            <input type="text" name="description" ng-model="detail.description" />
+        </div>
 
-    <div class="pure-g pure-control-group">
-        <label class="pure-u-1-5">调用类: </label>
-        <input class="pure-u-3-5" type="text" value="{{detail.job_class_name}}" disabled />
-    </div>
+        <div class="pure-control-group">
+            <label>开始时间</label>
+            <input type="text" name="startTime" ng-model="detail.startTime" />
+        </div>
 
-    <div class="pure-g pure-control-group">
-        <label class="pure-u-1-5">是否可用: </label>
-        <input class="pure-u-3-5" type="text" value="{{detail.is_durable | boolFilter}}" disabled />
-    </div>
+        <div class="pure-control-group">
+            <label>结束时间</label>
+            <input type="text" name="endTime" ng-model="detail.endTime" />
+        </div>
 
-    <div class="pure-g pure-control-group">
-        <label class="pure-u-1-5">描述: </label>
-        <input class="pure-u-3-5" type="text" value="{{detail.description}}" disabled />
-    </div>
+        <div class="pure-control-group">
+            <a href="#!/list" class="pure-button">返回</a>
+        </div>
+    </fieldset>
 
-    <div class="pure-g pure-control-group">
-        <label class="pure-u-1-5">开始时间: </label>
-        <input class="pure-u-3-5" type="text" value="{{detail.startTime}}" disabled />
-    </div>
-
-    <div class="pure-g pure-control-group">
-        <label class="pure-u-1-5">结束时间: </label>
-        <input class="pure-u-3-5" type="text" value="{{detail.endTime}}" disabled />
-    </div>
-
-    <div class="pure-control-group">
-        <a href="#!/list" class="pure-button">返回</a>
-    </div>
 </form>
-
-

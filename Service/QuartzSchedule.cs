@@ -30,7 +30,7 @@ namespace Service
             }
         }
 
-        public ScheduleJob_Details GetScheduleDetails(int id)
+        public ScheduleJob_Details GetScheduleDetail(int id)
         {
             using (IDbConnection connection = SqlConnectionHelper.GetSQLiteConnection())
             {
@@ -44,7 +44,7 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public bool DeleteScheduleDetails(int id)
+        public bool DeleteScheduleDetail(int id)
         {
             using (IDbConnection connection = SqlConnectionHelper.GetSQLiteConnection())
             {
@@ -57,13 +57,13 @@ namespace Service
         /// 写入数据
         /// </summary>
         /// <returns></returns>
-        public bool SaveScheduleDetails(ScheduleJob_Details data)
+        public bool SaveScheduleDetail(ScheduleJob_Details data)
         {
             using (IDbConnection connection = SqlConnectionHelper.GetSQLiteConnection())
             {
                 var sql = string.Format(
-@"INSERT INTO ScheduleJob_Details(id,sched_name,job_name,job_group,outAssembly,job_class_name,is_durable,description,startTime,endTime,platformMonitoring)
-VALUES({0}, '{1}', '{2}', '{3}', '{4}', '{5}','{6}','{7}',{8},{9},{10}); ", data.id, data.sched_name, data.job_name, data.job_group, data.outAssembly, data.job_class_name, data.is_durable ? 1 : 0, data.description,
+@"INSERT INTO ScheduleJob_Details(sched_name,job_name,job_group,outAssembly,job_class_name,is_durable,description,startTime,endTime,platformMonitoring)
+VALUES( '{0}', '{1}', '{2}', '{3}', '{4}','{5}','{6}',{7},{8},{9}); ", data.sched_name, data.job_name, data.job_group, data.outAssembly, data.job_class_name, data.is_durable ? 1 : 0, data.description,
 data.startTime == null ? "NULL" : data.startTime.ToString(),
 data.endTime == null ? "NULL" : data.endTime.ToString(),
 data.platformMonitoring ? 1 : 0);
@@ -71,7 +71,7 @@ data.platformMonitoring ? 1 : 0);
             }
         }
 
-        public bool EditScheduleDetails(ScheduleJob_Details data)
+        public bool EditScheduleDetail(ScheduleJob_Details data)
         {
             using (IDbConnection connection = SqlConnectionHelper.GetSQLiteConnection())
             {
@@ -90,7 +90,7 @@ data.platformMonitoring ? 1 : 0);
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public bool DeleteScheduleDetailsTriggers(int id)
+        public bool DeleteScheduleDetailsTrigger(int id)
         {
             using (IDbConnection connection = SqlConnectionHelper.GetSQLiteConnection())
             {
@@ -103,7 +103,7 @@ data.platformMonitoring ? 1 : 0);
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public bool SaveScheduleDetailsTriggers(ScheduleJob_Details_Triggers data)
+        public bool SaveScheduleDetailsTrigger(ScheduleJob_Details_Triggers data)
         {
             using (IDbConnection connection = SqlConnectionHelper.GetSQLiteConnection())
             {
@@ -116,7 +116,7 @@ data.endTime == null ? "NULL" : data.endTime.ToString()
                 return connection.Execute(sql) > 0;
             }
         }
-        public bool EditScheduleDetailsTriggers(ScheduleJob_Details_Triggers data)
+        public bool EditScheduleDetailsTrigger(ScheduleJob_Details_Triggers data)
         {
             using (IDbConnection connection = SqlConnectionHelper.GetSQLiteConnection())
             {
