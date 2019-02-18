@@ -33,14 +33,23 @@ function playerListCtrl($scope, $http, $location, $compile) {
     $scope.openTrigger = function (ev, id) {
         ev.preventDefault();
         if (typeof ($scope["myCheck" + id]) === "undefined") {
-            var ihtml = '<tr class="triggerWin triggerWin' + id + '"><td colspan="12"><div ng-hide="myCheck' + id + '" class="nghide ng-hide"><div>111111</div></div></td></tr>';
-            var iElement = $compile(ihtml)($scope);
-            angular.element($(ev.target).parents("tr")).after(iElement);
-            $scope["myCheck" + id] = false;
+            $http.get("/quartzmanage/triggers/" + id).then(function (res) {
+                $scope["triggers" + id] = res.data;
+                var ihtml = '<tr class="triggerWin triggerWin' + id + '"><td colspan="12"><div ng-hide="myCheck' + id + '" class="triggerWinhide triggerWinhide' + id + ' ng-hide">' + GetTriggerHtml(id) + '</div></td></tr>';
+                var iElement = $compile(ihtml)($scope);
+                angular.element($(ev.target).parents("tr")).after(iElement);
+                $scope["myCheck" + id] = false;
+                $(".triggerWin" + id + ">td").css({ 'border-bottom': '1px solid #cbcbcb' });
+            });
         }
         else {
+            if ($scope["myCheck" + id]) {
+                $(".triggerWin" + id + ">td").css({ 'border-bottom': '1px solid #cbcbcb' });
+            }
+            else {
+                $(".triggerWin" + id + ">td").css({ 'border-bottom': '0' });
+            }
             $scope["myCheck" + id] = !($scope["myCheck" + id]);
-            //angular.element(".triggerWin" + id).toggle();
         }
     };
 }
@@ -140,3 +149,52 @@ function triggerListCtrl($scope, $http, $routeParams) {
     $scope.orderProp = "-id"; //默认按票数降序排列
 }
 
+function GetTriggerHtml(id) {
+    var triggerHtml = '\
+<br/>\
+<a href="#!/add" class="pure-button pure-button-primary">新增触发器</a>\
+<table class="pure-table pure-table-horizontal">\
+<thead>\
+    <tr>\
+        <th>编号</th>\
+        <th>计划名称</th>\
+        <th>作业名称</th>\
+        <th>作业组</th>\
+        <th>触发器</th>\
+        <th>触发器组</th>\
+        <th>触发规则</th>\
+        <th>触发类型</th>\
+        <th>触发次数</th>\
+        <th>触发间隔</th>\
+        <th>开始时间</th>\
+        <th>结束时间</th>\
+        <th>描述</th>\
+        <th>操作</th>\
+    </tr>\
+</thead>\
+<tbody>\
+    <tr ng-repeat="item in triggers'+ id + ' | filter:queryVal | orderBy:orderProp" ng-dblclick="viewSchedule($event, item.id)">\
+        <td><a href="#!/view/{{item.id}}">{{item.id}}</a></td>\
+        <td>{{item.sched_name}}</td>\
+        <td>{{item.job_name}}</td>\
+        <td>{{item.job_group}}</td>\
+        <td>{{item.trigger_name}}</td>\
+        <td>{{item.trigger_group}}</td>\
+        <td>{{item.cronexpression}}</td>\
+        <td>{{item.trigger_type}}</td>\
+        <td>{{item.repeat_count}}</td>\
+        <td>{{item.repeat_interval}}</td>\
+        <td>{{item.startTime}}</td>\
+        <td>{{item.endTime}}</td>\
+        <td>{{item.description}}</td>\
+        <td>\
+        <a href = "#!/add/{{item.id}}"> 复制</a>\
+        <a href = "#!/edit/{{item.id}}"> 编辑</a>\
+        <a href = "#" ng-click="removeSchedule($event, item.id)"> 删除</a>\
+        </td>\
+    </tr>\
+</tbody>\
+</table>\
+';
+    return triggerHtml;
+}

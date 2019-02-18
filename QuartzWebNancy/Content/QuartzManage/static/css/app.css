@@ -24,6 +24,7 @@ a {color:#0000ff;}
 input.ng-invalid {color:#b94a48;border-color:#e9322d;}
 .val-error {font-size:12px;color:#ec0000;}
 
-.nghide {transition: all linear 0.5s;height:200px;}
+.triggerWinhide {transition: all linear 0.5s;height:200px;}
 .ng-hide {height: 0;}
-.triggerWin>td{padding: 0 1em;border: 0;}
+.triggerWin>td{padding:0 1em;border: 0;}
+.pure-g .pure-table tbody tr.triggerWin:hover{ background-color:#ffffff;}
