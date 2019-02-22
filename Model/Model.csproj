@@ -45,6 +45,7 @@
     <Compile Include="ScheduleJob_Details.cs" />
     <Compile Include="ScheduleJob_Details_Triggers.cs" />
     <Compile Include="ResultJson.cs" />
+    <Compile Include="SchedulerStatusEnum.cs" />
     <Compile Include="ScheduleJob_Log.cs" />
     <Compile Include="SysConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

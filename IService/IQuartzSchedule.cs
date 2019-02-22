@@ -8,8 +8,6 @@ namespace IService
     {
         IEnumerable<ScheduleJob_Details> ListScheduleDetails();
 
-        IEnumerable<ScheduleJob_Details_Triggers> ListScheduleDetailsTriggers(string schedName, string jobName);
-
         ScheduleJob_Details GetScheduleDetail(int id);
 
         bool DeleteScheduleDetail(int id);
@@ -17,6 +15,12 @@ namespace IService
         bool SaveScheduleDetail(ScheduleJob_Details data);
 
         bool EditScheduleDetail(ScheduleJob_Details data);
+
+        IEnumerable<ScheduleJob_Details_Triggers> ListTriggers();
+
+        IEnumerable<ScheduleJob_Details_Triggers> ListScheduleDetailsTriggers(string schedName, string jobName);
+
+        ScheduleJob_Details_Triggers ListScheduleDetailsTrigger(int id);
 
         bool DeleteScheduleDetailsTrigger(int id);
 

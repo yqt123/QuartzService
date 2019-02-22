@@ -4,6 +4,6 @@ namespace IService
 {
     public interface ITest : IService
     {
-        void SayHello();
+        void SayHello(string say);
     }
 }

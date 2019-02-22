@@ -1,0 +1,97 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+@{
+    Layout = "/Shared/_LayoutEmpty.cshtml";
+}
+<form name="playerForm" class="pure-form pure-form-aligned" novalidate autocomplete="off">
+    <fieldset>
+        <legend>编辑触发器信息 - 编号 {{trigger.id}}</legend>
+
+        <input type="hidden" name="id" ng-model="trigger.id" required />
+
+        <div class="pure-control-group">
+            <label>计划名称</label>
+            <input type="text" name="sched_name" ng-model="trigger.sched_name" required disabled/>
+            <span class="val-error" ng-show="playerForm.sched_name.$touched && playerForm.sched_name.$invalid">
+                <span ng-show="playerForm.sched_name.$error.required">必须填写计划名称</span>
+            </span>
+        </div>
+
+        <div class="pure-control-group">
+            <label>作业名称</label>
+            <input type="text" name="job_name" ng-model="trigger.job_name" required disabled/>
+            <span class="val-error" ng-show="playerForm.job_name.$touched && playerForm.job_name.$invalid">
+                <span ng-show="playerForm.job_name.$error.required">必须填写作业名称</span>
+            </span>
+            <span class="val-error" ng-show="isExisted">
+                作业名称已存在
+            </span>
+        </div>
+
+        <div class="pure-control-group">
+            <label>作业组</label>
+            <input type="text" name="job_group" ng-model="trigger.job_group" required disabled/>
+            <span class="val-error" ng-show="playerForm.job_group.$touched && playerForm.job_group.$invalid">
+                <span ng-show="playerForm.job_group.$error.required">必须填写作业组</span>
+            </span>
+        </div>
+
+        <div class="pure-control-group">
+            <label>触发器</label>
+            <input type="text" name="trigger_name" ng-model="trigger.trigger_name" required />
+            <span class="val-error" ng-show="playerForm.trigger_name.$touched && playerForm.trigger_name.$invalid">
+                <span ng-show="playerForm.trigger_name.$error.required">必须填写触发器</span>
+            </span>
+        </div>
+
+        <div class="pure-control-group">
+            <label>触发器组</label>
+            <input type="text" name="trigger_group" ng-model="trigger.trigger_group" required />
+            <span class="val-error" ng-show="playerForm.trigger_group.$touched && playerForm.trigger_group.$invalid">
+                <span ng-show="playerForm.trigger_group.$error.required">必须填写触发器组</span>
+            </span>
+        </div>
+
+        <div class="pure-control-group">
+            <label>触发规则</label>
+            <input type="text" name="cronexpression" ng-model="trigger.cronexpression" required />
+            <span class="val-error" ng-show="playerForm.cronexpression.$touched && playerForm.cronexpression.$invalid">
+                <span ng-show="playerForm.cronexpression.$error.required">必须填写触发规则</span>
+            </span>
+        </div>
+
+        <div class="pure-control-group">
+            <label>触发类型</label>
+            <input type="text" name="trigger_type" ng-model="trigger.trigger_type" required />
+            <span class="val-error" ng-show="playerForm.trigger_type.$touched && playerForm.trigger_type.$invalid">
+                <span ng-show="playerForm.trigger_type.$error.required">必须填写触发类型</span>
+            </span>
+        </div>
+
+        <div class="pure-control-group">
+            <label>触发次数</label>
+            <input type="text" name="repeat_count" ng-model="trigger.repeat_count" />
+        </div>
+
+        <div class="pure-control-group">
+            <label>触发间隔</label>
+            <input type="text" name="repeat_interval" ng-model="trigger.repeat_interval" />
+        </div>
+
+        <div class="pure-control-group">
+            <label>开始时间</label>
+            <input type="text" name="startTime" ng-model="trigger.startTime" />
+        </div>
+
+        <div class="pure-control-group">
+            <label>结束时间</label>
+            <input type="text" name="endTime" ng-model="trigger.endTime" />
+        </div>
+
+        <div class="pure-controls">
+            <input type="submit" value="保存" class="pure-button pure-button-primary"
+                   ng-click="submitForm()"
+                   ng-disabled="playerForm.$invalid" />
+            <a href="#!/list" class="pure-button">取消</a>
+        </div>
+    </fieldset>
+</form>

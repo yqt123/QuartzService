@@ -1,5 +1,9 @@
-﻿using Nancy;
+﻿using IService;
+using Model;
+using Nancy;
 using Nancy.Helpers;
+using Newtonsoft.Json;
+using Quartz.Core.Quartz;
 using QuartzWebNancy.Model;
 using System;
 using System.Collections.Generic;
@@ -12,36 +16,39 @@ namespace QuartzWebNancy.Modules
 {
     public class QuartzModule : BaseModule
     {
+        public static IQuartzSchedule bll = Quartz.Core.IOC.ObjectContainer.Current.Resolve<IQuartzSchedule>();
+
         public QuartzModule()
         {
-            //主页
-            Get["/nancy"] = r =>
-            {
-                return Response.AsRedirect("/nancy/Quartz/Index");
-            };
-            //主页
-            Get["/nancy/Quartz"] = r =>
-            {
-                return Response.AsRedirect("/nancy/Quartz/Index");
-            };
-            Get["/nancy/Quartz/Index"] = r => ReturnHomeAction();
+            Get["/QuartzRun"] = r => QuartzView();
+            Get["/QuartzRun/setStatus/{status:int}"] = r => SetQuartzStatus(r.status);
+            Get["/QuartzRun/getStatus"] = r => GetQuartzStatus();
         }
 
-        public dynamic ReturnHomeAction()
+        public dynamic QuartzView()
         {
-            //单一数值
-            DynamicModel.HelloWorld = "Hello world...";
-            //集合数据 1
-            List<string> list1 = new List<string>() { "listValue_1", "listValue_2", "listValue_3", "listValue_4" };
-            //集合数据 2 
-            List<TestClass> list2 = new List<TestClass>() {
-                new TestClass("1","张三"),
-                new TestClass("2","李四"),
-                new TestClass("3","王五")
-            };
-            DynamicModel.List1 = list1;
-            DynamicModel.List2 = list2;
-            return View["Index", DynamicModel];
+            return View["View"];
+        }
+
+        public dynamic SetQuartzStatus(int status)
+        {
+            var pcScheduler = Scheduler.Create();
+            var _status = (SchedulerStatusEnum)status;
+            switch (_status)
+            {
+                case SchedulerStatusEnum.pause: { pcScheduler.PauseAll(); } break;
+                case SchedulerStatusEnum.running: { pcScheduler.Start(); } break;
+                case SchedulerStatusEnum.Shutdown: { pcScheduler.Shutdown(); } break;
+            }
+            var jsonStr = JsonConvert.SerializeObject(new ResultJson { Status = true });
+            return jsonStr;
+        }
+
+        public dynamic GetQuartzStatus()
+        {
+            var pcScheduler = Scheduler.Create();
+            var jsonStr = JsonConvert.SerializeObject(new ResultJson { Status = true, Result = pcScheduler.Status });
+            return jsonStr;
         }
     }
 }

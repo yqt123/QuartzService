@@ -1,0 +1,13 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+@{
+    Layout = "/Shared/_LayoutEmpty.cshtml";
+}
+<form name="playerForm" class="pure-form pure-form-aligned" novalidate autocomplete="off">
+    <fieldset>
+        <legend>ÔËÐÐ×´Ì¬</legend>
+        <div class="pure-control-group">
+            <img name="status" ng-model="status"/>
+            <label>{{statusName}}</label>
+        </div>
+    </fieldset>
+</form>

@@ -1,10 +1,18 @@
-html,body {background-color:#DFDFDF;font-size:14px;}
+html,body {background-color:#f8f8f8;font-size:14px;font-family:Helvetica Neue,Helvetica,Arial,sans-serif;}
 a {color:#0000ff;}
 
-.header {position:fixed;top:0;left:0;width:100%;height:40px;background-color:#666;}
-.header-title {margin-left:15px;line-height:40px;font-size:18px;color:#fcfcfc;}
+.header {width:100%;height:30px;background-color:#666;}
+.header-title {margin-left:15px;line-height:30px;font-size:18px;color:#fcfcfc;}
+.header-run {margin-left:30px;line-height:30px;font-size:12px;color:#5cb85c;}
 
-.container {position:absolute;top:55px;bottom:15px;left:10%;width:80%;background-color:#fff;border-radius: 5px;}
+.mainAside{position:absolute;width:70px;height:100%;left:0;top:0;color:#ffffff;background-color:#333;}
+.main-aside ul, .main-aside ul li {margin: 0;padding: 0;list-style-type: none;list-style-image: none;}
+.main-aside ul {margin-top: 50px;border-top: 1px solid #444;}
+.main-aside ul li {height: 100px;border-bottom: 1px solid #444;position: relative;overflow: hidden;text-align:center;line-height:100px;font-weight:bold;}
+.main-aside ul li a {color:#aaa;}
+.main-container{width:100%;height:100%;background-color:#f8f8f8;}
+.main-container-content {padding-left:70px;}
+/*.container {position:absolute;top:50px;bottom:15px;left:70px;width:80%;background-color:#fff;}*/
 .content {height:100%;overflow:auto;}
 
 .pure-g>div {padding:15px;box-sizing:border-box;}
@@ -24,7 +32,8 @@ a {color:#0000ff;}
 input.ng-invalid {color:#b94a48;border-color:#e9322d;}
 .val-error {font-size:12px;color:#ec0000;}
 
-.triggerWinhide {transition: all linear 0.5s;height:200px;}
+.triggerWinhide {transition: all linear 0.5s;height:200px;text-align:right;}
 .ng-hide {height: 0;}
 .triggerWin>td{padding:0 1em;border: 0;}
 .pure-g .pure-table tbody tr.triggerWin:hover{ background-color:#ffffff;}
+.triggerWinhide .pure-table{text-align:left;}

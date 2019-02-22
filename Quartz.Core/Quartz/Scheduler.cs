@@ -14,12 +14,15 @@ namespace Quartz.Core.Quartz
         public IScheduler _QtzScheduler = null;        //调度器
         private IQuartzSchedule _iSchedule = IOC.ObjectContainer.Current.Resolve<IQuartzSchedule>();
 
+        public SchedulerStatusEnum Status { get; private set; }
+
         private Scheduler()
         {
             //初始化 Quartz 的作业调度器
             var properties = new NameValueCollection();
             var schedulerFactory = new StdSchedulerFactory(properties);
             this._QtzScheduler = schedulerFactory.GetScheduler().GetAwaiter().GetResult();
+            this.Status = SchedulerStatusEnum.initial;
             this.ScheduleJob();
         }
 
@@ -31,6 +34,7 @@ namespace Quartz.Core.Quartz
             if (_QtzScheduler != null)
             {
                 _QtzScheduler.Shutdown(waitForJobsToComplete);
+                this.Status = SchedulerStatusEnum.Shutdown;
             }
         }
 
@@ -42,6 +46,7 @@ namespace Quartz.Core.Quartz
             if (_QtzScheduler != null)
             {
                 _QtzScheduler.ResumeAll();
+                this.Status = SchedulerStatusEnum.running;
             }
         }
 
@@ -53,6 +58,7 @@ namespace Quartz.Core.Quartz
             if (_QtzScheduler != null)
             {
                 _QtzScheduler.Start();
+                this.Status = SchedulerStatusEnum.running;
             }
         }
 
@@ -64,6 +70,7 @@ namespace Quartz.Core.Quartz
             if (_QtzScheduler != null)
             {
                 _QtzScheduler.PauseAll();
+                this.Status = SchedulerStatusEnum.pause;
             }
         }
 

@@ -68,6 +68,9 @@
   <ItemGroup>
     <Content Include="Content\Css\Style.css" />
     <Content Include="Content\Image\favicon.ico" />
+    <Content Include="Content\Image\restart.png" />
+    <Content Include="Content\Image\start.png" />
+    <Content Include="Content\Image\stop.png" />
     <Content Include="Content\QuartzManage\app\app.js" />
     <Content Include="Content\QuartzManage\app\controller\voteControllers.js" />
     <Content Include="Content\QuartzManage\app\directive\voteDirectives.js" />
@@ -87,7 +90,9 @@
     <Content Include="Content\Scripts\angular-route-1.7.0.min.js" />
     <Content Include="Content\Scripts\jquery-1.10.2.min.js" />
     <Content Include="Content\Scripts\angular-1.7.0.min.js" />
+    <Content Include="Views\QuartzManage\triggerAdd.cshtml" />
     <None Include="Views\QuartzManage\add.cshtml" />
+    <Content Include="Views\QuartzManage\triggerEdit.cshtml" />
     <None Include="Views\QuartzManage\edit.cshtml" />
     <Content Include="Views\QuartzManage\TriggerList.cshtml" />
     <Content Include="Views\QuartzManage\welcome.cshtml" />
@@ -117,6 +122,7 @@
     <None Include="packages.config" />
     <Content Include="Views\QuartzManage\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutEmpty.cshtml" />
+    <Content Include="Views\Quartz\View.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

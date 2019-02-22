@@ -9,9 +9,10 @@ namespace Service
 {
     public class Test : BaseService, ITest
     {
-        public void SayHello()
+        public void SayHello(string say)
         {
-            Console.Write("hello !");
+            Console.Write(say);
+            Console.WriteLine();
         }
     }
 }

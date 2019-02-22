@@ -25,9 +25,7 @@ function playerListCtrl($scope, $http, $location, $compile) {
 
     $scope.viewSchedule = function (ev, id) {
         ev.preventDefault();
-        var u = "#!/view/" + id;
-        //$location.path(u);
-        location.href = u;
+        $location.path("/view/" + id);
     };
 
     $scope.openTrigger = function (ev, id) {
@@ -52,6 +50,26 @@ function playerListCtrl($scope, $http, $location, $compile) {
             $scope["myCheck" + id] = !($scope["myCheck" + id]);
         }
     };
+
+    //删除触发器
+    $scope.removeTrigger = function (ev, id) {
+        ev.preventDefault();
+        $http.post("/quartzmanage/deleteTrigger/" + id).then(function (resp) {
+            if (resp.data.Status) {
+                angular.forEach($scope.triggers, function (val, key) {
+                    if (id === val.id) {
+                        $scope.triggers.splice(key, 1);
+                    }
+                });
+            }
+            else {
+                alert("删除失败！");
+            }
+        }, function (resp) {
+            alert("删除失败！");
+        });
+    };
+
 }
 
 //Add Controller
@@ -73,10 +91,10 @@ function playerAddCtrl($scope, $http, $routeParams, $location, voteSer) {
                 //提交表单
                 $http.post("/quartzmanage/saveScheduleDetail", $scope.scheduler).then(function (resp) { //无论是否保存成功，都进行页面跳转
                     console.log("Saved Successfully! Status: " + resp.Status);
-                    $location.path("#!/list");
+                    $location.path("/list");
                 }, function (resp) {
                     console.log("Saved Failly! Status: " + resp.Status);
-                    $location.path("#!/list");
+                    $location.path("/list");
                 });
             }
         });
@@ -112,7 +130,7 @@ function playerEditCtrl($scope, $http, $routeParams, $location, voteSer) {
 function EditScheduleDetail($http, $scope, $location) {
     $http.post("/quartzmanage/EditScheduleDetail", $scope.scheduler).then(function (resp) {
         console.log("Saved Successfully! Status: " + resp.data.Status);
-        $location.path("#!/list");
+        $location.path("/list");
     }, function (resp) {
         alert("修改失败！");
     });
@@ -152,7 +170,7 @@ function triggerListCtrl($scope, $http, $routeParams) {
 function GetTriggerHtml(id) {
     var triggerHtml = '\
 <br/>\
-<a href="#!/add" class="pure-button pure-button-primary">新增触发器</a>\
+<a href="#!/triggerAdd/'+ id + '" class="pure-button pure-button-primary">新增触发器</a>\
 <table class="pure-table pure-table-horizontal">\
 <thead>\
     <tr>\
@@ -168,12 +186,11 @@ function GetTriggerHtml(id) {
         <th>触发间隔</th>\
         <th>开始时间</th>\
         <th>结束时间</th>\
-        <th>描述</th>\
         <th>操作</th>\
     </tr>\
 </thead>\
 <tbody>\
-    <tr ng-repeat="item in triggers'+ id + ' | filter:queryVal | orderBy:orderProp" ng-dblclick="viewSchedule($event, item.id)">\
+    <tr ng-repeat="item in triggers'+ id + ' | filter:queryVal | orderBy:orderProp">\
         <td><a href="#!/view/{{item.id}}">{{item.id}}</a></td>\
         <td>{{item.sched_name}}</td>\
         <td>{{item.job_name}}</td>\
@@ -186,15 +203,88 @@ function GetTriggerHtml(id) {
         <td>{{item.repeat_interval}}</td>\
         <td>{{item.startTime}}</td>\
         <td>{{item.endTime}}</td>\
-        <td>{{item.description}}</td>\
         <td>\
-        <a href = "#!/add/{{item.id}}"> 复制</a>\
-        <a href = "#!/edit/{{item.id}}"> 编辑</a>\
-        <a href = "#" ng-click="removeSchedule($event, item.id)"> 删除</a>\
+        <a href = "#!/triggerEdit/{{item.id}}">编辑</a>\
+        <a href = "#" ng-click="removeTrigger($event, item.id)">删除</a>\
         </td>\
     </tr>\
 </tbody>\
 </table>\
 ';
     return triggerHtml;
+}
+
+//触发器作业
+function triggerAddCtrl($scope, $http, $routeParams, $location, voteSer) {
+    if ($routeParams.id) {
+        $http.get("/quartzmanage/scheduleDetail/" + $routeParams.id).then(function (res) {
+            $scope.trigger = new Object();
+            $scope.trigger.sched_name = res.data.sched_name;
+            $scope.trigger.job_name = res.data.job_name;
+            $scope.trigger.job_group = res.data.job_group;
+            $scope.trigger.trigger_type = "cron";
+            $scope.sched_id = res.data.id;
+        });
+    }
+
+    //提交表单
+    $scope.submitForm = function () {
+        voteSer.getTriggerNames().then(function (data) {
+            //判断姓名是否已存在
+            if (data.indexOf($scope.trigger.trigger_name.toLowerCase()) >= 0) {
+                $scope.isExisted = true;
+            } else {
+                //提交表单
+                $http.post("/quartzmanage/saveTrigger", $scope.trigger).then(function (resp) { //无论是否保存成功，都进行页面跳转
+                    console.log("Saved Successfully! Status: " + resp.Status);
+                    $location.path("/list");
+                }, function (resp) {
+                    console.log("Saved Failly! Status: " + resp.Status);
+                    $location.path("/list");
+                });
+            }
+        });
+    };
+}
+
+//Edit Controller
+function triggerEditCtrl($scope, $http, $routeParams, $location, voteSer) {
+    if ($routeParams.id) {
+        $http.get("/quartzmanage/trigger/" + $routeParams.id).then(function (res) {
+            if (typeof res.data === "object") {
+                $scope.trigger = res.data;
+                $scope.oldtrigger_name = $scope.trigger.trigger_name;
+            }
+        });
+    }
+    //提交表单
+    $scope.submitForm = function () {
+        if ($scope.oldtrigger_name == $scope.trigger.trigger_name) {
+            EditTrigger($http, $scope, $location);
+        }
+        else {
+            voteSer.getTriggerNames().then(function (data) {
+                //判断该球员姓名是否已存在
+                if (data.indexOf($scope.trigger.trigger_name.toLowerCase()) >= 0) {
+                    $scope.isExisted = true;
+                } else {
+                    EditTrigger($http, $scope, $location);
+                }
+            });
+        }
+    };
+}
+
+function EditTrigger($http, $scope, $location) {
+    $http.post("/quartzmanage/editTrigger", $scope.trigger).then(function (resp) {
+        console.log("Saved Successfully! Status: " + resp.data.Status);
+        $location.path("/list");
+    }, function (resp) {
+        alert("修改失败！");
+    });
+}
+
+function QuartzRunCtrl($scope, $http, $location) {
+    $scope.statusName = "未开始";
+    $scope.status = "~/Content/Image/start.png";
 }

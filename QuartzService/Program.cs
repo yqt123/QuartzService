@@ -1,4 +1,5 @@
-﻿using Quartz.Core.IOC;
+﻿using IService;
+using Quartz.Core.IOC;
 using Quartz.Core.Owin;
 using Quartz.Core.Quartz;
 using System;
@@ -30,16 +31,17 @@ namespace QuartzService
         {
             ObjectContainer.ApplicationStart(new Quartz.Core.IOC.AutoFacContainer());
 
-            //ITest _ITest = ObjectContainer.Current.Resolve<ITest>();
-            //_ITest.SayHello();
-
-            //Console.ReadLine();
+            ITest _ITest = ObjectContainer.Current.Resolve<ITest>();
+            _ITest.SayHello(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "端口8099正在启动...");
 
             var pcScheduler = Scheduler.Create();
-            pcScheduler.Start();
+            //pcScheduler.Start();
 
             OwinHelper owinHelper = OwinHelper.Create("8099");
             owinHelper.Start();
+
+            _ITest.SayHello(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "端口8099启动成功！");
+
             Console.ReadLine();
 
             //Quartz.Core.Log4net.Log4.Info("test.......");

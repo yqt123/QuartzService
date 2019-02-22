@@ -31,8 +31,17 @@ namespace QuartzWebNancy.Modules
             Post["/quartzmanage/deleteScheduleDetail/{id:int}"] = parameters => DeleteScheduleDetail(parameters.id);
             Post["/quartzmanage/editScheduleDetail"] = parameters => EditScheduleDetail();
 
+
             Get["/quartzmanage/triggerList"] = parameters => TriggerList();
+            Get["/quartzmanage/allTriggers"] = parameters => AllTriggers();
             Get["/quartzmanage/triggers/{id:int}"] = parameters => GetTriggers(parameters.id);
+            Get["/quartzmanage/trigger/{id:int}"] = parameters => GetTrigger(parameters.id);
+            Get["/quartzmanage/triggerAdd"] = parameters => TriggerAdd();
+            Get["/quartzmanage/triggerEdit"] = parameters => TriggerEdit();
+            Post["/quartzmanage/saveTrigger"] = parameters => SaveTrigger();
+            Post["/quartzmanage/deleteTrigger/{id:int}"] = parameters => DeleteTrigger(parameters.id);
+            Post["/quartzmanage/editTrigger"] = parameters => EditTrigger();
+
         }
 
         public dynamic Welcome()
@@ -115,11 +124,73 @@ namespace QuartzWebNancy.Modules
             return View["TriggerList"];
         }
 
+        public dynamic TriggerAdd()
+        {
+            return View["triggerAdd"];
+        }
+
+        public dynamic TriggerEdit()
+        {
+            return View["triggerEdit"];
+        }
+
+        /// <summary>
+        /// 所有触发器
+        /// </summary>
+        /// <returns></returns>
+        public dynamic AllTriggers()
+        {
+            var details = bll.ListTriggers();
+            var jsonStr = JsonConvert.SerializeObject(details);
+            return jsonStr;
+        }
+        /// <summary>
+        /// 获取作业对应的触发器
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public dynamic GetTriggers(int id)
         {
             var schedule = bll.GetScheduleDetail(id);
             var details = bll.ListScheduleDetailsTriggers(schedule.sched_name, schedule.job_name);
             var jsonStr = JsonConvert.SerializeObject(details);
+            return jsonStr;
+        }
+        /// <summary>
+        /// 获取单个触发器
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public dynamic GetTrigger(int id)
+        {
+            var schedule = bll.GetScheduleDetail(id);
+            var details = bll.ListScheduleDetailsTrigger(id);
+            var jsonStr = JsonConvert.SerializeObject(details);
+            return jsonStr;
+        }
+
+        public dynamic SaveTrigger()
+        {
+            var post = GetParameters();
+            var data = JsonConvert.DeserializeObject<ScheduleJob_Details_Triggers>(post);
+            var res = bll.SaveScheduleDetailsTrigger(data);
+            var jsonStr = JsonConvert.SerializeObject(new ResultJson { Status = res });
+            return jsonStr;
+        }
+
+        public dynamic DeleteTrigger(int id)
+        {
+            var res = bll.DeleteScheduleDetailsTrigger(id);
+            var jsonStr = JsonConvert.SerializeObject(new ResultJson { Status = res });
+            return jsonStr;
+        }
+
+        public dynamic EditTrigger()
+        {
+            var post = GetParameters();
+            var data = JsonConvert.DeserializeObject<ScheduleJob_Details_Triggers>(post);
+            var res = bll.EditScheduleDetailsTrigger(data);
+            var jsonStr = JsonConvert.SerializeObject(new ResultJson { Status = res });
             return jsonStr;
         }
 
