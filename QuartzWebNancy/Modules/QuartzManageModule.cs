@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Model;
+using Quartz.Core.Quartz;
 
 namespace QuartzWebNancy.Modules
 {
@@ -54,7 +55,30 @@ namespace QuartzWebNancy.Modules
         public dynamic Index()
         {
             ViewBag.Title = "作业管理";
-            return View["index"];
+            var pcScheduler = Scheduler.Create();
+            if (pcScheduler._QtzScheduler.IsStarted)
+            {
+                if (pcScheduler._QtzScheduler.IsShutdown)
+                {
+                    DynamicModel.StatusName = "已关闭";
+                }
+                else
+                {
+                    DynamicModel.StatusName = "正在执行...";
+                }
+            }
+            else
+            {
+                DynamicModel.StatusName = "未开始";
+            }
+            switch (pcScheduler.Status)
+            {
+                case SchedulerStatusEnum.pause: { DynamicModel.StatusName = "已暂停"; } break;
+                case SchedulerStatusEnum.running: { DynamicModel.StatusName = "正在执行..."; } break;
+                case SchedulerStatusEnum.Shutdown: { DynamicModel.StatusName = "已关闭"; } break;
+                default: { DynamicModel.StatusName = "未开始"; } break;
+            }
+            return View["index", DynamicModel];
         }
 
         public dynamic ReturnList()
