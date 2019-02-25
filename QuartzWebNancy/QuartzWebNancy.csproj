@@ -101,7 +101,7 @@
     <None Include="Views\QuartzManage\edit.cshtml" />
     <Content Include="Views\QuartzManage\TriggerList.cshtml" />
     <Content Include="Views\QuartzManage\welcome.cshtml" />
-    <None Include="Views\QuartzManage\list.cshtml" />
+    <None Include="Views\QuartzManage\home.cshtml" />
     <None Include="Views\QuartzManage\view.cshtml" />
     <Content Include="Web.config" />
   </ItemGroup>

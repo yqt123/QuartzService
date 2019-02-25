@@ -4,8 +4,8 @@ angular.module("voteApp", ["ngRoute", "ngAnimate"]);
 
 //路由配置
 angular.module("voteApp").config(["$routeProvider", function ($routeProvider) {
-    $routeProvider.when("/list", {
-        templateUrl: "/quartzmanage/list",
+    $routeProvider.when("/home", {
+        templateUrl: "/quartzmanage/home",
         controller: playerListCtrl
     }).when("/view/:id", {
         templateUrl: "/quartzmanage/view",

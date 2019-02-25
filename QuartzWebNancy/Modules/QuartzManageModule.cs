@@ -22,16 +22,17 @@ namespace QuartzWebNancy.Modules
         {
             Get["/quartzmanage"] = parameters => Index();
             Get["/quartzmanage/welcome"] = parameters => Welcome();
-            Get["/quartzmanage/list"] = parameters => ReturnList();
+            Get["/quartzmanage/home"] = parameters => ReturnHome();
             Get["/quartzmanage/add"] = parameters => ReturnAdd();
             Get["/quartzmanage/edit"] = parameters => ReturnEdit();
             Get["/quartzmanage/view"] = parameters => ReturnView();
             Get["/quartzmanage/scheduleDetails"] = parameters => GetScheduleDetails();
             Get["/quartzmanage/scheduleDetail/{id:int}"] = parameters => GetScheduleDetail(parameters.id);
+            Get["/quartzmanage/scheduleStatus"] = parameters => ScheduleStatus();
+
             Post["/quartzmanage/saveScheduleDetail"] = parameters => SaveScheduleDetail();
             Post["/quartzmanage/deleteScheduleDetail/{id:int}"] = parameters => DeleteScheduleDetail(parameters.id);
             Post["/quartzmanage/editScheduleDetail"] = parameters => EditScheduleDetail();
-
 
             Get["/quartzmanage/triggerList"] = parameters => TriggerList();
             Get["/quartzmanage/allTriggers"] = parameters => AllTriggers();
@@ -56,27 +57,27 @@ namespace QuartzWebNancy.Modules
         {
             ViewBag.Title = "作业管理";
             var pcScheduler = Scheduler.Create();
-            if (pcScheduler._QtzScheduler.IsStarted)
+            if (pcScheduler._QtzScheduler.IsShutdown)
             {
-                if (pcScheduler._QtzScheduler.IsShutdown)
-                {
-                    DynamicModel.StatusName = "已关闭";
-                }
-                else
-                {
-                    DynamicModel.StatusName = "正在执行...";
-                }
+                DynamicModel.StatusName = "已关闭";
             }
             else
             {
-                DynamicModel.StatusName = "未开始";
+                if (pcScheduler._QtzScheduler.IsStarted)
+                {
+                    DynamicModel.StatusName = "正在执行...";
+                }
+                else
+                {
+                    DynamicModel.StatusName = "未开始";
+                }
             }
             return View["index", DynamicModel];
         }
 
-        public dynamic ReturnList()
+        public dynamic ReturnHome()
         {
-            return View["list"];
+            return View["home"];
         }
 
         public dynamic ReturnAdd()
@@ -130,6 +131,30 @@ namespace QuartzWebNancy.Modules
             var data = JsonConvert.DeserializeObject<ScheduleJob_Details>(post);
             var res = bll.EditScheduleDetail(data);
             var jsonStr = JsonConvert.SerializeObject(new ResultJson { Status = res });
+            return jsonStr;
+        }
+
+        public dynamic ScheduleStatus()
+        {
+            string StatusName = string.Empty;
+            var pcScheduler = Scheduler.Create();
+
+            if (pcScheduler._QtzScheduler.IsShutdown)
+            {
+                StatusName = "已关闭";
+            }
+            else
+            {
+                if (pcScheduler._QtzScheduler.IsStarted)
+                {
+                    StatusName = "正在执行...";
+                }
+                else
+                {
+                    StatusName = "未开始";
+                }
+            }
+            var jsonStr = JsonConvert.SerializeObject(new ResultJson { Status = true, Result = StatusName });
             return jsonStr;
         }
 

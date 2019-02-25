@@ -1,5 +1,5 @@
 //List Controller
-function playerListCtrl($scope, $http, $location, $compile) {
+function playerListCtrl($scope, $http, $location, $compile, $interval) {
     $http.get("/quartzmanage/scheduleDetails").then(function (res) {
         $scope.scheduleDetails = res.data;
     });
@@ -70,6 +70,31 @@ function playerListCtrl($scope, $http, $location, $compile) {
         });
     };
 
+    //轮询检查作业状态
+    var stop = $interval(function () {
+        $http.get("/quartzmanage/scheduleStatus").then(function (resp) {
+            $(".header-run").text(resp.data.Result);
+        }, function (resp) {
+            console.log("Failly! Status: " + resp.Status);
+        });
+    }, 10000);
+    $scope.$on('$ionicView.beforeLeave', function () {
+        $interval.cancel(stop);//离开页面后停止轮询
+    });
+
+    //重新开启
+    $scope.ReStart = function (ev) {
+        ev.preventDefault();
+        $http.post("/quartzmanage/ReStart").then(function (resp) {
+            if (resp.data.Status) {
+            }
+            else {
+                alert("删除失败！");
+            }
+        }, function (resp) {
+            alert("重启失败！");
+        });
+    };
 }
 
 //Add Controller
@@ -91,10 +116,10 @@ function playerAddCtrl($scope, $http, $routeParams, $location, voteSer) {
                 //提交表单
                 $http.post("/quartzmanage/saveScheduleDetail", $scope.scheduler).then(function (resp) { //无论是否保存成功，都进行页面跳转
                     console.log("Saved Successfully! Status: " + resp.Status);
-                    $location.path("/list");
+                    $location.path("/home");
                 }, function (resp) {
                     console.log("Saved Failly! Status: " + resp.Status);
-                    $location.path("/list");
+                    $location.path("/home");
                 });
             }
         });
@@ -130,7 +155,7 @@ function playerEditCtrl($scope, $http, $routeParams, $location, voteSer) {
 function EditScheduleDetail($http, $scope, $location) {
     $http.post("/quartzmanage/EditScheduleDetail", $scope.scheduler).then(function (resp) {
         console.log("Saved Successfully! Status: " + resp.data.Status);
-        $location.path("/list");
+        $location.path("/home");
     }, function (resp) {
         alert("修改失败！");
     });
@@ -237,10 +262,10 @@ function triggerAddCtrl($scope, $http, $routeParams, $location, voteSer) {
                 //提交表单
                 $http.post("/quartzmanage/saveTrigger", $scope.trigger).then(function (resp) { //无论是否保存成功，都进行页面跳转
                     console.log("Saved Successfully! Status: " + resp.Status);
-                    $location.path("/list");
+                    $location.path("/home");
                 }, function (resp) {
                     console.log("Saved Failly! Status: " + resp.Status);
-                    $location.path("/list");
+                    $location.path("/home");
                 });
             }
         });
@@ -278,7 +303,7 @@ function triggerEditCtrl($scope, $http, $routeParams, $location, voteSer) {
 function EditTrigger($http, $scope, $location) {
     $http.post("/quartzmanage/editTrigger", $scope.trigger).then(function (resp) {
         console.log("Saved Successfully! Status: " + resp.data.Status);
-        $location.path("/list");
+        $location.path("/home");
     }, function (resp) {
         alert("修改失败！");
     });
