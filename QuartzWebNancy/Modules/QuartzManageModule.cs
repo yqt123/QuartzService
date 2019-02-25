@@ -71,13 +71,6 @@ namespace QuartzWebNancy.Modules
             {
                 DynamicModel.StatusName = "未开始";
             }
-            switch (pcScheduler.Status)
-            {
-                case SchedulerStatusEnum.pause: { DynamicModel.StatusName = "已暂停"; } break;
-                case SchedulerStatusEnum.running: { DynamicModel.StatusName = "正在执行..."; } break;
-                case SchedulerStatusEnum.Shutdown: { DynamicModel.StatusName = "已关闭"; } break;
-                default: { DynamicModel.StatusName = "未开始"; } break;
-            }
             return View["index", DynamicModel];
         }
 
