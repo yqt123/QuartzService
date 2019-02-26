@@ -1,4 +1,5 @@
 ﻿using Model;
+using Quartz.Common;
 using Quartz.Core.Owin;
 using Quartz.Core.Quartz;
 using System;
@@ -29,8 +30,8 @@ namespace QuartzService
             }
             catch (Exception ex)
             {
-                Quartz.Core.Log4net.Log4.Error(ex.Message);
-                Quartz.Core.Log4net.Log4.Error(ex.StackTrace);
+                Log4.Error(ex.Message);
+                Log4.Error(ex.StackTrace);
             }
         }
 
@@ -42,8 +43,8 @@ namespace QuartzService
                 if (pcScheduler != null) pcScheduler.Shutdown();
             }
             catch (Exception ex) {
-                Quartz.Core.Log4net.Log4.Error(ex.Message);
-                Quartz.Core.Log4net.Log4.Error(ex.StackTrace);
+                Log4.Error(ex.Message);
+                Log4.Error(ex.StackTrace);
             }
         }
 

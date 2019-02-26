@@ -14,16 +14,22 @@ namespace Service.Job
     {
         public static readonly string jobDetailMad = "jobDetail";
         public static readonly string triggerMad = "jobTrigger";
+        public static readonly string jobHelperMad = "JobHelper";
         public readonly string ExecResult = "ExecResult";
         public ScheduleJob_Details jobDetail { get; private set; }
         public IEnumerable<ScheduleJob_Details_Triggers> jobDetailTrigger { get; private set; }
         public string JobName { get; set; }
         QuartzSchedule schedulebll = new QuartzSchedule();
+        /// <summary>
+        /// 本次执行查询截止时间
+        /// </summary>
+        public DateTime ExeEndQueryTime { get; set; }
 
         public Task Execute(IJobExecutionContext context)
         {
             try
             {
+                ExeEndQueryTime = DateTime.Now;
                 this.jobDetail = context.MergedJobDataMap[jobDetailMad] as ScheduleJob_Details;
                 this.jobDetailTrigger = context.MergedJobDataMap[triggerMad] as IEnumerable<ScheduleJob_Details_Triggers>;
                 if (this.jobDetail == null)
@@ -46,7 +52,7 @@ namespace Service.Job
                 {
                     Log4.Info(string.Format("【{0}】作业计划不允许使用，跳过此次执行。", this.jobDetail.description));
                     context.Put(this.ExecResult, "完成");
-                    return Task.FromResult(true); ;
+                    return Task.FromResult(true);
                 }
                 if (!jobDetailNew.scheEquals(jobDetail) || IsChangedTrigger(jobDetailTrigger, jobDetailTriggerNew))
                 {
@@ -54,9 +60,10 @@ namespace Service.Job
                     Log4.Info(string.Format("【{0}】的作业计划属性已更改，将删除该计划的实现作业，然后重新创建一个作业。", this.jobDetail.description));
                     context.Put(this.ExecResult, "重新创建一个作业");
 
-                    Tuple<IJobDetail, List<ITrigger>> tuple = JobHelper.RestartJob(context.Scheduler, jobDetail, jobDetailNew);
+                    var JobHelper = context.MergedJobDataMap[jobHelperMad] as IJobHelper;
+                    Tuple<IJobDetail, List<ITrigger>> tuple = JobHelper.RestartJob2(context.Scheduler, jobDetail, jobDetailNew);
                     Log4.Info(string.Format("【{0}】的重新创建一个作业完毕，[IJOB.Execute]退出。作业计划：{1}，作业：{2}，触发器：{3}，表达式：{4}。", this.jobDetail.sched_name, jobDetailNew.sched_name, jobDetailNew.description, tuple.Item1.Key, tuple.Item1.Key.Name, tuple.Item2[0].Key.Name, ""));
-                    return Task.FromResult(true); ; //退出
+                    return Task.FromResult(true);
                 }
                 //执行具体作业的业务逻辑
                 _Execute(context);
@@ -65,8 +72,10 @@ namespace Service.Job
             {
                 Log4.Info(string.Format("【{0}】执行作业失败，消息：{1}", JobName, ex.Message + ex.StackTrace));
             }
-
-            
+            finally
+            {
+                WirteScheduleLog(context);
+            }
             return Task.FromResult(true);
         }
 
@@ -87,5 +96,25 @@ namespace Service.Job
         {
 
         }
+
+        /// <summary>
+        /// 写执行日志到数据库
+        /// </summary>
+        /// <param name="context"></param>
+        protected void WirteScheduleLog(IJobExecutionContext context)
+        {
+            string _result = string.Format("【{0}】执行完毕，执行结果：{1}", this.JobName, context.Get(this.ExecResult) != null ? context.Get(this.ExecResult).ToString() : "失败");
+            Log4.Info(_result);
+            if (jobDetail != null)
+                schedulebll.SaveScheduleLog(new ScheduleJob_Log
+                {
+                    description = string.Format("【{0}】执行完毕，执行结果：{1}", jobDetail.description, context.Get(this.ExecResult) != null ? context.Get(this.ExecResult).ToString() : "失败"),
+                    job_name = jobDetail.job_name,
+                    sched_name = jobDetail.sched_name,
+                    update_time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                    success = (context.Get(this.ExecResult) != null && context.Get(this.ExecResult).ToString() == "成功" ? true : false)
+                });
+        }
+
     }
 }

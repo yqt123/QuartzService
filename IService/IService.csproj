@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="IQuartzSchedule.cs" />
     <Compile Include="IBaseJob.cs" />
+    <Compile Include="IJobHelper.cs" />
     <Compile Include="ITest.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

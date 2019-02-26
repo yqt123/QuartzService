@@ -91,7 +91,6 @@
     <Compile Include="IOC\DefaultContainerForDictionary.cs" />
     <Compile Include="IOC\IinjectContainer.cs" />
     <Compile Include="IOC\ObjectContainer.cs" />
-    <Compile Include="Log4net\Log4.cs" />
     <Compile Include="Owin\OwinHelper.cs" />
     <Compile Include="Owin\Startup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

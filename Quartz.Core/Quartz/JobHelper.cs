@@ -5,13 +5,14 @@ using Model;
 using Quartz;
 namespace Quartz.Core.Quartz
 {
-    public class JobHelper
+    public class JobHelper: IJobHelper
     {
         #region 声明
         public static readonly string JOBNameFormat = "JOB-{0}-{1}-{2}-{3}";
         public static readonly string TRINameFormat = "TRIGGER-{0}-{1}-{2}-{3}";
         public static readonly string jobDetailMad = "jobDetail";
         public static readonly string triggerMad = "jobTrigger";
+        public static readonly string jobHelperMad = "JobHelper";
         public static IQuartzSchedule _iSchedule = IOC.ObjectContainer.Current.Resolve<IQuartzSchedule>();
 
         #endregion
@@ -82,7 +83,7 @@ namespace Quartz.Core.Quartz
             }
             var jobTrigger = _iSchedule.ListScheduleDetailsTriggers(jobDetail.sched_name, jobDetail.job_name);
             //作业执行上下文携带数据
-            IDictionary<string, object> dataMap = new Dictionary<string, object>() { { jobDetailMad, jobDetail }, { triggerMad, jobTrigger } };
+            IDictionary<string, object> dataMap = new Dictionary<string, object>() { { jobDetailMad, jobDetail }, { triggerMad, jobTrigger },{ jobHelperMad, new JobHelper() } };
             if (attachMap != null)
             {
                 foreach (KeyValuePair<string, object> kv in attachMap)
@@ -170,5 +171,34 @@ namespace Quartz.Core.Quartz
             if (forJob != null) builder = builder.ForJob(forJob);
             return (ISimpleTrigger)builder.Build();
         }
+
+        /// <summary>
+        /// 当采集计划各属性发生改变时，需要重新启动此作业
+        /// </summary>
+        /// <param name="qtzScheduler">调度器</param>
+        /// <param name="jobDetailOld">旧的采集计划</param>
+        /// <param name="jobDetailNew">新采集计划</param>
+        /// <param name="clMethod">采集方法</param>
+        /// <returns></returns>
+        public Tuple<IJobDetail, List<ITrigger>> RestartJob2(IScheduler qtzScheduler, ScheduleJob_Details jobDetailOld, ScheduleJob_Details jobDetailNew)
+        {
+            //采集计划属性发生变更，则从调度器中删除此作业
+            JobKey jobKey = GetJobKey(jobDetailOld);
+            IJobDetail ij = CreateJobDetail(jobDetailNew);
+            List<ITrigger> triggerList = new List<ITrigger>();
+            qtzScheduler.DeleteJob(jobKey); //删除旧的作业
+            var jobTriggers = _iSchedule.ListScheduleDetailsTriggers(jobDetailNew.sched_name, jobDetailNew.job_name);
+            foreach (var trigger in jobTriggers)
+            {
+                ITrigger ig = CreateTrigger(trigger, ij);
+                qtzScheduler.ScheduleJob(ij, ig);//调度新的作业
+                //创建一个立即执行的触发器
+                ig = JobHelper.CreateOnceTrigger(58, ij);
+                qtzScheduler.ScheduleJob(ig);
+                triggerList.Add(ig);
+            }
+            return new Tuple<IJobDetail, List<ITrigger>>(ij, triggerList);
+        }
+
     }
 }

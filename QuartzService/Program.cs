@@ -1,4 +1,5 @@
 ﻿using IService;
+using Quartz.Common;
 using Quartz.Core.IOC;
 using Quartz.Core.Owin;
 using Quartz.Core.Quartz;
@@ -44,7 +45,7 @@ namespace QuartzService
 
             Console.ReadLine();
 
-            //Quartz.Core.Log4net.Log4.Info("test.......");
+            //Log4.Info(string.Format("【{0}】开始执行IJOB的[Execute]...","dddd"));
             //Console.ReadLine();
         }
     }

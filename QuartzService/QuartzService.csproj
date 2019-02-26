@@ -92,6 +92,10 @@
       <Project>{537bb201-bc01-4570-94d7-27e5c5cca3ed}</Project>
       <Name>Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Quartz.Common\Quartz.Common.csproj">
+      <Project>{f5d880f4-dbbe-4688-86f1-5e9dc986dec7}</Project>
+      <Name>Quartz.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Quartz.Core\Quartz.Core.csproj">
       <Project>{a902989f-236b-4dba-8bd4-66a4294f6fbd}</Project>
       <Name>Quartz.Core</Name>
