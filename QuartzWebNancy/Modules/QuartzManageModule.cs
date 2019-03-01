@@ -33,6 +33,7 @@ namespace QuartzWebNancy.Modules
             Post["/quartzmanage/saveScheduleDetail"] = parameters => SaveScheduleDetail();
             Post["/quartzmanage/deleteScheduleDetail/{id:int}"] = parameters => DeleteScheduleDetail(parameters.id);
             Post["/quartzmanage/editScheduleDetail"] = parameters => EditScheduleDetail();
+            Post["/quartzmanage/JobToSchedulePlan/{id:int}"] = parameters => JobToSchedulePlan(parameters.id);
 
             Get["/quartzmanage/triggerList"] = parameters => TriggerList();
             Get["/quartzmanage/allTriggers"] = parameters => AllTriggers();
@@ -98,6 +99,12 @@ namespace QuartzWebNancy.Modules
         public dynamic GetScheduleDetails()
         {
             var details = bll.ListScheduleDetails().ToList();
+            var pcScheduler = Scheduler.Create();
+            foreach (var item in details)
+            {
+                var _job = pcScheduler._QtzScheduler.GetJobDetail(JobHelper.GetJobKey(item)).GetAwaiter().GetResult();
+                item.isRunning = _job != null;
+            }
             var jsonStr = JsonConvert.SerializeObject(details);
             return jsonStr;
         }
@@ -155,6 +162,15 @@ namespace QuartzWebNancy.Modules
                 }
             }
             var jsonStr = JsonConvert.SerializeObject(new ResultJson { Status = true, Result = StatusName });
+            return jsonStr;
+        }
+
+        public dynamic JobToSchedulePlan(int id)
+        {
+            var item = bll.GetScheduleDetail(id);
+            var pcScheduler = Scheduler.Create();
+            JobHelper.ScheduleJobByPlan(pcScheduler._QtzScheduler, item);
+            var jsonStr = JsonConvert.SerializeObject(new ResultJson { Status = true });
             return jsonStr;
         }
 

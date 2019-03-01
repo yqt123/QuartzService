@@ -47,6 +47,10 @@ namespace Model
         /// </summary>
         public bool platformMonitoring { get; set; }
         /// <summary>
+        /// 是否在运行中
+        /// </summary>
+        public bool isRunning { get; set; }
+        /// <summary>
         /// 比较值是否相等
         /// </summary>
         /// <param name="plNew"></param>

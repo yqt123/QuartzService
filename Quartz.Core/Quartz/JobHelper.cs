@@ -50,7 +50,7 @@ namespace Quartz.Core.Quartz
         {
             Tuple<IJobDetail, List<ITrigger>> tuple = null;
             List<ITrigger> triggerList = new List<ITrigger>();
-            //if (jobDetail.is_durable)
+            if (jobDetail.is_durable)
             {
                 IJobDetail ij = CreateJobDetail(jobDetail);
                 var jobTriggers = _iSchedule.ListScheduleDetailsTriggers(jobDetail.sched_name, jobDetail.job_name);

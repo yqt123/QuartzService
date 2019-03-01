@@ -30,6 +30,8 @@ namespace QuartzService
 
         static void Start()
         {
+            Log4.Info("开始启动作业...");
+
             ObjectContainer.ApplicationStart(new Quartz.Core.IOC.AutoFacContainer());
 
             ITest _ITest = ObjectContainer.Current.Resolve<ITest>();

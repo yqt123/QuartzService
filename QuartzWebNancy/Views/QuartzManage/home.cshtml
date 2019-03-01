@@ -36,13 +36,15 @@
                     <th>描述</th>
                     <th>开始时间</th>
                     <th>结束时间</th>
-                    <th>触发器</th>
+                    <th>是否在作业队列</th>
                     <th>操作</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="item in scheduleDetails | filter:queryVal | orderBy:orderProp" ng-dblclick="viewSchedule($event, item.id)">
-                    <td><a href="#!/view/{{item.id}}">{{item.id}}</a></td>
+                    <td>
+                        <a href="#!/view/{{item.id}}">{{item.id}}</a>
+                    </td>
                     <td>{{item.sched_name}}</td>
                     <td>{{item.job_name}}</td>
                     <td>{{item.job_group}}</td>
@@ -52,8 +54,12 @@
                     <td>{{item.description}}</td>
                     <td>{{item.startTime}}</td>
                     <td>{{item.endTime}}</td>
-                    <td><a href="#" ng-click="openTrigger($event, item.id)">触发器</a></td>
                     <td>
+                        <a href="#" ng-click="openTrigger($event, item.id)" ng-hide="item.isRunning">否</a>
+                        <label ng-hide="!item.isRunning">是</label>
+                    </td>
+                    <td>
+                        <a href="#" ng-click="openTrigger($event, item.id)">触发器</a>
                         <a href="#!/add/{{item.id}}">复制</a>
                         <a href="#!/edit/{{item.id}}">编辑</a>
                         <a href="#" ng-click="removeSchedule($event, item.id)">删除</a>

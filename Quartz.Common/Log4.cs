@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
 namespace Quartz.Common
 {
-    public static class Log4
+    public class Log4
     {
 
         /// <summary>

@@ -10,6 +10,11 @@ namespace Service.Job
 {
     public class TestJob : BaseJob
     {
+        public TestJob()
+        {
+            JobName = "测试作业";
+        }
+
         protected override void _Execute(IJobExecutionContext context)
         {
             JobKey jobKey = context.JobDetail.Key;

@@ -95,6 +95,26 @@ function playerListCtrl($scope, $http, $location, $compile, $interval) {
             alert("重启失败！");
         });
     };
+
+    //添加到作业队列
+    $scope.JobToSchedulePlan = function (ev, id) {
+        ev.preventDefault();
+        $http.post("/quartzmanage/JobToSchedulePlan/" + id).then(function (resp) {
+            if (resp.data.Status) {
+                angular.forEach($scope.scheduleDetails, function (val, key) {
+                    if (id === val.id) {
+                        val.
+                    }
+                });
+            }
+            else {
+                alert("删除失败！");
+            }
+        }, function (resp) {
+            alert("删除失败！");
+        });
+    };
+
 }
 
 //Add Controller

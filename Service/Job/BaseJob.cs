@@ -62,11 +62,12 @@ namespace Service.Job
 
                     var JobHelper = context.MergedJobDataMap[jobHelperMad] as IJobHelper;
                     Tuple<IJobDetail, List<ITrigger>> tuple = JobHelper.RestartJob2(context.Scheduler, jobDetail, jobDetailNew);
-                    Log4.Info(string.Format("【{0}】的重新创建一个作业完毕，[IJOB.Execute]退出。作业计划：{1}，作业：{2}，触发器：{3}，表达式：{4}。", this.jobDetail.sched_name, jobDetailNew.sched_name, jobDetailNew.description, tuple.Item1.Key, tuple.Item1.Key.Name, tuple.Item2[0].Key.Name, ""));
+                    Log4.Info(string.Format("【{0}】的重新创建一个作业完毕，[IJOB.Execute]退出。作业计划：{1}，作业：{2}，触发器：{3}，表达式：{4}。", this.jobDetail.description, jobDetailNew.sched_name, jobDetailNew.description, tuple.Item1.Key, tuple.Item1.Key.Name, tuple.Item2[0].Key.Name, ""));
                     return Task.FromResult(true);
                 }
                 //执行具体作业的业务逻辑
                 _Execute(context);
+                context.Put(this.ExecResult, "成功");
             }
             catch (Exception ex)
             {
