@@ -103,7 +103,7 @@ function playerListCtrl($scope, $http, $location, $compile, $interval) {
             if (resp.data.Status) {
                 angular.forEach($scope.scheduleDetails, function (val, key) {
                     if (id === val.id) {
-                        val.
+                        val.isRunning = true;
                     }
                 });
             }
