@@ -7,25 +7,27 @@ function playerListCtrl($scope, $http, $location, $compile, $interval) {
     //删除
     $scope.removeSchedule = function (ev, id) {
         ev.preventDefault();
-        $http.post("/quartzmanage/deleteScheduleDetail/" + id).then(function (resp) {
-            if (resp.data.Status) {
-                angular.forEach($scope.scheduleDetails, function (val, key) {
-                    if (id === val.id) {
-                        $scope.scheduleDetails.splice(key, 1);
-                    }
-                });
-            }
-            else {
+        if (confirm("是否删除作业？")) {
+            $http.post("/quartzmanage/deleteScheduleDetail/" + id).then(function (resp) {
+                if (resp.data.Status) {
+                    angular.forEach($scope.scheduleDetails, function (val, key) {
+                        if (id === val.id) {
+                            $scope.scheduleDetails.splice(key, 1);
+                        }
+                    });
+                }
+                else {
+                    alert("删除失败！");
+                }
+            }, function (resp) {
                 alert("删除失败！");
-            }
-        }, function (resp) {
-            alert("删除失败！");
-        });
+            });
+        }
     };
 
     $scope.viewSchedule = function (ev, id) {
         ev.preventDefault();
-        $location.path("/view/" + id);
+        $location.path("/edit/" + id);
     };
 
     $scope.openTrigger = function (ev, id) {
@@ -33,7 +35,7 @@ function playerListCtrl($scope, $http, $location, $compile, $interval) {
         if (typeof ($scope["myCheck" + id]) === "undefined") {
             $http.get("/quartzmanage/triggers/" + id).then(function (res) {
                 $scope["triggers" + id] = res.data;
-                var ihtml = '<tr class="triggerWin triggerWin' + id + '"><td colspan="12"><div ng-hide="myCheck' + id + '" class="triggerWinhide triggerWinhide' + id + ' ng-hide">' + GetTriggerHtml(id) + '</div></td></tr>';
+                var ihtml = '<tr class="triggerWin triggerWin' + id + '"><td colspan="13"><div ng-hide="myCheck' + id + '" class="triggerWinhide triggerWinhide' + id + ' ng-hide">' + GetTriggerHtml(id) + '</div></td></tr>';
                 var iElement = $compile(ihtml)($scope);
                 angular.element($(ev.target).parents("tr")).after(iElement);
                 $scope["myCheck" + id] = false;
@@ -97,24 +99,36 @@ function playerListCtrl($scope, $http, $location, $compile, $interval) {
     };
 
     //添加到作业队列
-    $scope.JobToSchedulePlan = function (ev, id) {
+    $scope.JobToSchedulePlan = function (ev, id, type) {
         ev.preventDefault();
-        $http.post("/quartzmanage/JobToSchedulePlan/" + id).then(function (resp) {
+        $http.post("/quartzmanage/JobToSchedulePlan/" + id + "/" + type).then(function (resp) {
             if (resp.data.Status) {
                 angular.forEach($scope.scheduleDetails, function (val, key) {
                     if (id === val.id) {
-                        val.isRunning = true;
+                        val.isRunning = type == 1;
                     }
                 });
             }
             else {
-                alert("删除失败！");
+                alert('加入失败！请先检查作业是否可用');
             }
         }, function (resp) {
-            alert("删除失败！");
         });
     };
 
+    //立即执行
+    $scope.ExecuteNow = function (ev, id) {
+        ev.preventDefault();
+        $http.post("/quartzmanage/ExecuteNow/" + id).then(function (resp) {
+            if (resp.data.Status) {
+
+            }
+            else {
+                alert('执行失败！请先检查作业是否可用');
+            }
+        }, function (resp) {
+        });
+    };
 }
 
 //Add Controller
@@ -249,8 +263,8 @@ function GetTriggerHtml(id) {
         <td>{{item.startTime}}</td>\
         <td>{{item.endTime}}</td>\
         <td>\
-        <a href = "#!/triggerEdit/{{item.id}}">编辑</a>\
-        <a href = "#" ng-click="removeTrigger($event, item.id)">删除</a>\
+        <a href="#!/triggerEdit/{{item.id}}" class="pure-button" >编辑</a>\
+        <a href="#" ng-click="removeTrigger($event, item.id)" class="pure-button" >删除</a>\
         </td>\
     </tr>\
 </tbody>\
@@ -332,4 +346,34 @@ function EditTrigger($http, $scope, $location) {
 function QuartzRunCtrl($scope, $http, $location) {
     $scope.statusName = "未开始";
     $scope.status = "~/Content/Image/start.png";
+}
+
+function scheduleLogCtrl($scope, $http, $filter) {
+    var nowDate = new Date();
+    $scope.queryStartTime = $filter("date")(nowDate, "yyyy-MM-dd");
+    $scope.queryEndTime = $filter("date")(nowDate, "yyyy-MM-dd");
+
+    $http.get("/quartzmanage/getScheduleLog/" + $scope.queryStartTime + "/" + $scope.queryEndTime).then(function (resp) {
+        $scope.scheduleLog = resp.data;
+    });
+
+    $scope.GetScheduleLog = function (ev) {
+        ev.preventDefault();
+        $http.get("/quartzmanage/getScheduleLog/" + $scope.queryStartTime + "/" + $scope.queryEndTime).then(function (resp) {
+            $scope.scheduleLog = resp.data;
+        });
+    };
+    $scope.DelScheduleLog = function (ev) {
+        ev.preventDefault();
+        if (confirm("是否删除时间段内的日志？")) {
+            $http.post("/quartzmanage/delScheduleLog/" + $scope.queryStartTime + "/" + $scope.queryEndTime).then(function (resp) {
+                if (resp.data.Status) {
+                    $scope.scheduleLog = null;
+                }
+                else {
+                    alert("删除失败！");
+                }
+            });
+        }
+    };
 }

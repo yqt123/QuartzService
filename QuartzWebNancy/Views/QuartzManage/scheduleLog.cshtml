@@ -1,0 +1,43 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+@{
+    Layout = "/Shared/_LayoutEmpty.cshtml";
+}
+<form class="pure-form">
+    <div class="pure-g">
+        <div class="pure-u-1-1">
+            <div class="pure-control-group">
+                <wui-date format="yyyy-mm-dd" placeholder="请选择或输入开始日期" id="queryStartTime" btns="{'ok':'确定','now':'此刻'}" ng-model="queryStartTime"></wui-date>-
+                <wui-date format="yyyy-mm-dd" placeholder="请选择或输入结束日期" id="queryEndTime" btns="{'ok':'确定','now':'此刻'}" ng-model="queryEndTime"></wui-date>
+
+                <a href="#" class="pure-button pure-button-primary" ng-click="GetScheduleLog($event)">查询</a>
+                <a href="#" class="pure-button pure-button-primary" ng-click="DelScheduleLog($event)">删除</a>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="pure-g" style="margin-top:-20px;">
+    <div class="pure-u-1-1">
+        <table class="pure-table pure-table-horizontal">
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>计划名称</th>
+                    <th>作业名称</th>
+                    <th>描述</th>
+                    <th>是否成功</th>
+                    <th>执行时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in scheduleLog | orderBy:sched_LogID">
+                    <td>{{item.sched_LogID}}</td>
+                    <td>{{item.sched_name}}</td>
+                    <td>{{item.job_name}}</td>
+                    <td>{{item.description}}</td>
+                    <td>{{item.success | boolFilter}}</td>
+                    <td>{{item.update_time}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

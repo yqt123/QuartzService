@@ -117,6 +117,17 @@ data.platformMonitoring ? 1 : 0);
                 return connection.Execute(sql) > 0;
             }
         }
+
+        public bool DeleteScheduleDetailsTriggers(string schedName, string jobName)
+        {
+            using (IDbConnection connection = SqlConnectionHelper.GetSQLiteConnection())
+            {
+                var sql = "DELETE FROM scheduleJob_details_triggers ";
+                sql += string.Format("where sched_name='{0}' and job_name='{1}';", schedName, jobName);
+                return connection.Execute(sql) > 0;
+            }
+        }
+
         /// <summary>
         /// 写入数据
         /// </summary>

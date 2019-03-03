@@ -1,5 +1,5 @@
 //定义主模块并注入依赖
-angular.module("voteApp", ["ngRoute", "ngAnimate"]);
+angular.module("voteApp", ["ngRoute", "ngAnimate", "wui.date"]);
 //angular.module('voteApp', ['ngAnimate']);
 
 //路由配置
@@ -33,10 +33,13 @@ angular.module("voteApp").config(["$routeProvider", function ($routeProvider) {
         controller: triggerEditCtrl
     }).when("/welcome", {
         templateUrl: "/quartzmanage/welcome"
-
     }).when("/quartzRun", {
         templateUrl: "/QuartzRun",
         controller: QuartzRunCtrl
+    }).when("/ScheduleLog", {
+        templateUrl: "/quartzmanage/ScheduleLog",
+        controller: scheduleLogCtrl
+
     }).otherwise({
         redirectTo: "/welcome"
     });

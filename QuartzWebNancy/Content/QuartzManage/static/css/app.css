@@ -1,18 +1,18 @@
 html,body {background-color:#f8f8f8;font-size:14px;font-family:Helvetica Neue,Helvetica,Arial,sans-serif;}
 a {color:#0000ff;}
 
-.header {width:100%;height:30px;background-color:#666;}
-.header-title {margin-left:15px;line-height:30px;font-size:18px;color:#fcfcfc;}
-.header-run {float:right;margin-right:20px;line-height:30px;font-size:12px;color:#5cb85c;}
-
-.mainAside{position:absolute;width:70px;height:100%;left:0;top:0;color:#ffffff;background-color:#333;}
+.mainAside{position:absolute;width:70px;height:100%;left:0;top:0;color:#ffffff;background-color:#333;z-index:1;}
 .main-aside ul, .main-aside ul li {margin: 0;padding: 0;list-style-type: none;list-style-image: none;}
 .main-aside ul {margin-top: 50px;border-top: 1px solid #444;}
 .main-aside ul li {height: 100px;border-bottom: 1px solid #444;position: relative;overflow: hidden;text-align:center;line-height:100px;font-weight:bold;}
 .main-aside ul li a {color:#aaa;}
-.main-container{width:100%;height:100%;background-color:#f8f8f8;}
-.main-container-content {padding-left:70px;}
-/*.container {position:absolute;top:50px;bottom:15px;left:70px;width:80%;background-color:#fff;}*/
+.main-container {position: absolute;width: 100%;height: 100%;left: 0;top: 0;background-color: #f8f8f8;z-index:0;}
+
+.main-container-content {padding-left:70px;height: 100%;position:relative;}
+.container {position:relative;top:-35px;left:0;width:100%;padding-top:35px;height:100%;background-color:#f8f8f8;z-index:3;}
+.header {width:100%;height:35px;background-color:#666;z-index:4;position:relative;top:0;left:0;}
+.header-title {margin-left:15px;line-height:35px;font-size:18px;color:#fcfcfc;}
+.header-run {float:right;margin-right:20px;line-height:35px;font-size:12px;color:#5cb85c;}
 .content {height:100%;overflow:auto;}
 
 .pure-g>div {padding:15px;box-sizing:border-box;}
@@ -26,8 +26,8 @@ a {color:#0000ff;}
 .pure-form fieldset {margin:2em}
 .pure-form fieldset legend {margin:15px 0;font-weight:bold;}
 .pure-form fieldset .pure-control-group {margin:15px 0;}
-.pure-form fieldset input[type="text"],
-.pure-form fieldset select {width:250px;}
+.pure-form input[type="text"],
+.pure-form select {width:250px;}
 .pure-form select{height: 2.50em;}
 input.ng-invalid {color:#b94a48;border-color:#e9322d;}
 .val-error {font-size:12px;color:#ec0000;}
@@ -37,3 +37,5 @@ input.ng-invalid {color:#b94a48;border-color:#e9322d;}
 .triggerWin>td{padding:0 1em;border: 0;}
 .pure-g .pure-table tbody tr.triggerWin:hover{ background-color:#ffffff;}
 .triggerWinhide .pure-table{text-align:left;}
+.white {background-color: white;}
+.pure-form input[type=text].wui-date-input {padding: 0;padding-left: 24px;}

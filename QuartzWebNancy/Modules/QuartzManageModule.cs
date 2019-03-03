@@ -20,31 +20,35 @@ namespace QuartzWebNancy.Modules
 
         public QuartzManageModule()
         {
-            Get["/quartzmanage"] = parameters => Index();
-            Get["/quartzmanage/welcome"] = parameters => Welcome();
-            Get["/quartzmanage/home"] = parameters => ReturnHome();
-            Get["/quartzmanage/add"] = parameters => ReturnAdd();
-            Get["/quartzmanage/edit"] = parameters => ReturnEdit();
-            Get["/quartzmanage/view"] = parameters => ReturnView();
-            Get["/quartzmanage/scheduleDetails"] = parameters => GetScheduleDetails();
-            Get["/quartzmanage/scheduleDetail/{id:int}"] = parameters => GetScheduleDetail(parameters.id);
-            Get["/quartzmanage/scheduleStatus"] = parameters => ScheduleStatus();
+            Get["/quartzmanage"] = r => Index();
+            Get["/quartzmanage/welcome"] = r => Welcome();
+            Get["/quartzmanage/home"] = r => ReturnHome();
+            Get["/quartzmanage/add"] = r => ReturnAdd();
+            Get["/quartzmanage/edit"] = r => ReturnEdit();
+            Get["/quartzmanage/view"] = r => ReturnView();
+            Get["/quartzmanage/scheduleDetails"] = r => GetScheduleDetails();
+            Get["/quartzmanage/scheduleDetail/{id:int}"] = r => GetScheduleDetail(r.id);
+            Get["/quartzmanage/scheduleStatus"] = r => ScheduleStatus();
 
-            Post["/quartzmanage/saveScheduleDetail"] = parameters => SaveScheduleDetail();
-            Post["/quartzmanage/deleteScheduleDetail/{id:int}"] = parameters => DeleteScheduleDetail(parameters.id);
-            Post["/quartzmanage/editScheduleDetail"] = parameters => EditScheduleDetail();
-            Post["/quartzmanage/JobToSchedulePlan/{id:int}"] = parameters => JobToSchedulePlan(parameters.id);
+            Post["/quartzmanage/saveScheduleDetail"] = r => SaveScheduleDetail();
+            Post["/quartzmanage/deleteScheduleDetail/{id:int}"] = r => DeleteScheduleDetail(r.id);
+            Post["/quartzmanage/editScheduleDetail"] = r => EditScheduleDetail();
+            Post["/quartzmanage/JobToSchedulePlan/{id:int}/{type:int}"] = r => JobToSchedulePlan(r.id, r.type);
+            Post["/quartzmanage/ExecuteNow/{id:int}"] = r => ExecuteNow(r.id);
 
-            Get["/quartzmanage/triggerList"] = parameters => TriggerList();
-            Get["/quartzmanage/allTriggers"] = parameters => AllTriggers();
-            Get["/quartzmanage/triggers/{id:int}"] = parameters => GetTriggers(parameters.id);
-            Get["/quartzmanage/trigger/{id:int}"] = parameters => GetTrigger(parameters.id);
-            Get["/quartzmanage/triggerAdd"] = parameters => TriggerAdd();
-            Get["/quartzmanage/triggerEdit"] = parameters => TriggerEdit();
-            Post["/quartzmanage/saveTrigger"] = parameters => SaveTrigger();
-            Post["/quartzmanage/deleteTrigger/{id:int}"] = parameters => DeleteTrigger(parameters.id);
-            Post["/quartzmanage/editTrigger"] = parameters => EditTrigger();
+            Get["/quartzmanage/triggerList"] = r => TriggerList();
+            Get["/quartzmanage/allTriggers"] = r => AllTriggers();
+            Get["/quartzmanage/triggers/{id:int}"] = r => GetTriggers(r.id);
+            Get["/quartzmanage/trigger/{id:int}"] = r => GetTrigger(r.id);
+            Get["/quartzmanage/triggerAdd"] = r => TriggerAdd();
+            Get["/quartzmanage/triggerEdit"] = r => TriggerEdit();
+            Post["/quartzmanage/saveTrigger"] = r => SaveTrigger();
+            Post["/quartzmanage/deleteTrigger/{id:int}"] = r => DeleteTrigger(r.id);
+            Post["/quartzmanage/editTrigger"] = r => EditTrigger();
 
+            Get["/quartzmanage/scheduleLog"] = r => ScheduleLog();
+            Get["/quartzmanage/getScheduleLog/{start:DateTime}/{end:DateTime}"] = r => GetScheduleLog(r.start, r.end);
+            Post["/quartzmanage/delScheduleLog/{start:DateTime}/{end:DateTime}"] = r => DelScheduleLog(r.start, r.end);
         }
 
         public dynamic Welcome()
@@ -127,6 +131,8 @@ namespace QuartzWebNancy.Modules
 
         public dynamic DeleteScheduleDetail(int id)
         {
+            var item = bll.GetScheduleDetail(id);
+            bll.DeleteScheduleDetailsTriggers(item.sched_name, item.job_name);
             var res = bll.DeleteScheduleDetail(id);
             var jsonStr = JsonConvert.SerializeObject(new ResultJson { Status = res });
             return jsonStr;
@@ -165,12 +171,40 @@ namespace QuartzWebNancy.Modules
             return jsonStr;
         }
 
-        public dynamic JobToSchedulePlan(int id)
+        public dynamic JobToSchedulePlan(int id, int type)
         {
             var item = bll.GetScheduleDetail(id);
-            var pcScheduler = Scheduler.Create();
-            JobHelper.ScheduleJobByPlan(pcScheduler._QtzScheduler, item);
-            var jsonStr = JsonConvert.SerializeObject(new ResultJson { Status = true });
+            var res = new ResultJson { Status = false };
+            if (type == 1)
+            {
+                if (item.is_durable)
+                {
+                    var pcScheduler = Scheduler.Create();
+                    JobHelper.ScheduleJobByPlan(pcScheduler._QtzScheduler, item);
+                    res.Status = true;
+                }
+            }
+            else
+            {
+                var pcScheduler = Scheduler.Create();
+                pcScheduler._QtzScheduler.DeleteJob(JobHelper.GetJobKey(item));
+                res.Status = true;
+            }
+            var jsonStr = JsonConvert.SerializeObject(res);
+            return jsonStr;
+        }
+
+        public dynamic ExecuteNow(int id)
+        {
+            var item = bll.GetScheduleDetail(id);
+            var res = new ResultJson { Status = false };
+            if (item.is_durable)
+            {
+                var pcScheduler = Scheduler.Create();
+                JobHelper.RestartJob(pcScheduler._QtzScheduler, item, item);
+                res.Status = true;
+            }
+            var jsonStr = JsonConvert.SerializeObject(res);
             return jsonStr;
         }
 
@@ -253,5 +287,35 @@ namespace QuartzWebNancy.Modules
         }
 
         #endregion
+
+        #region 日志
+
+        public dynamic ScheduleLog()
+        {
+            return View["ScheduleLog"];
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public dynamic GetScheduleLog(DateTime start, DateTime end)
+        {
+            var data = bll.ListScheduleJobLog(start, end);
+            var jsonStr = JsonConvert.SerializeObject(data);
+            return jsonStr;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public dynamic DelScheduleLog(DateTime start, DateTime end)
+        {
+            var res = bll.DeleteScheduleJobLog(start, end);
+            var jsonStr = JsonConvert.SerializeObject(new ResultJson { Status = res });
+            return jsonStr;
+        }
+        #endregion
+
     }
 }

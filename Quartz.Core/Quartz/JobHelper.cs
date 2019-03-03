@@ -5,7 +5,7 @@ using Model;
 using Quartz;
 namespace Quartz.Core.Quartz
 {
-    public class JobHelper: IJobHelper
+    public class JobHelper : IJobHelper
     {
         #region 声明
         public static readonly string JOBNameFormat = "JOB-{0}-{1}-{2}-{3}";
@@ -25,7 +25,7 @@ namespace Quartz.Core.Quartz
         public static JobKey GetJobKey(ScheduleJob_Details jobDetail)
         {
             return new JobKey(
-                string.Format(JOBNameFormat, jobDetail.sched_name, jobDetail.job_name, jobDetail.job_group, jobDetail.is_durable), jobDetail.job_group);
+                string.Format(JOBNameFormat, jobDetail.sched_name, jobDetail.job_name, jobDetail.job_group, true), jobDetail.job_group);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Quartz.Core.Quartz
             }
             var jobTrigger = _iSchedule.ListScheduleDetailsTriggers(jobDetail.sched_name, jobDetail.job_name);
             //作业执行上下文携带数据
-            IDictionary<string, object> dataMap = new Dictionary<string, object>() { { jobDetailMad, jobDetail }, { triggerMad, jobTrigger },{ jobHelperMad, new JobHelper() } };
+            IDictionary<string, object> dataMap = new Dictionary<string, object>() { { jobDetailMad, jobDetail }, { triggerMad, jobTrigger }, { jobHelperMad, new JobHelper() } };
             if (attachMap != null)
             {
                 foreach (KeyValuePair<string, object> kv in attachMap)
@@ -147,7 +147,7 @@ namespace Quartz.Core.Quartz
                 ITrigger ig = CreateTrigger(trigger, ij);
                 qtzScheduler.ScheduleJob(ij, ig);//调度新的作业
                 //创建一个立即执行的触发器
-                ig = JobHelper.CreateOnceTrigger(58, ij);
+                ig = JobHelper.CreateOnceTrigger(5, ij);
                 qtzScheduler.ScheduleJob(ig);
                 triggerList.Add(ig);
             }
@@ -193,7 +193,7 @@ namespace Quartz.Core.Quartz
                 ITrigger ig = CreateTrigger(trigger, ij);
                 qtzScheduler.ScheduleJob(ij, ig);//调度新的作业
                 //创建一个立即执行的触发器
-                ig = JobHelper.CreateOnceTrigger(58, ij);
+                ig = JobHelper.CreateOnceTrigger(5, ij);
                 qtzScheduler.ScheduleJob(ig);
                 triggerList.Add(ig);
             }

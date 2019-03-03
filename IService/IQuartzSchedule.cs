@@ -24,6 +24,8 @@ namespace IService
 
         bool DeleteScheduleDetailsTrigger(int id);
 
+        bool DeleteScheduleDetailsTriggers(string schedName, string jobName);
+
         bool SaveScheduleDetailsTrigger(ScheduleJob_Details_Triggers data);
 
         bool EditScheduleDetailsTrigger(ScheduleJob_Details_Triggers data);
